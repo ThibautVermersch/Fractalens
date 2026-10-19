@@ -62,8 +62,8 @@ public class ComplexIterator implements Iterator<IComplex> {
     private int nbIterations;
 
     /**
-     * The last term computed by this iterator (initially, the first term of the
-     * sequence).
+     * The term to return on the next call to {@link #next()} (initially, the first term
+     * of the sequence).
      */
     private IComplex current;
 
@@ -102,9 +102,10 @@ public class ComplexIterator implements Iterator<IComplex> {
             throw new NoSuchElementException("No more terms to compute in the sequence");
         }
 
+        IComplex term = current;
         current = sequence.computeNext(current);
         nbIterations++;
-        return current;
+        return term;
     }
 
 }
