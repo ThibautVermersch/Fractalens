@@ -67,6 +67,7 @@ class ComplexSequenceTest {
             IComplex first, IComplex constant, int nbTerms) {
         // TODO Create here an instance of your class implementing IComplexSequence for
         // Julia's sequence.
+            JuliaSequence julia = new JuliaSequence(first, constant, nbTerms);
         return null;
     }
 

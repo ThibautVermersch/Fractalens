@@ -68,6 +68,23 @@ interface IFractalGenerator {
     + {abstract} saveImage() : void
 }
 
+abstract class AbstractComplexSequence implements IComplexSequence {
+    - final initial : IComplex
+    - final maxIterations : int
+    * AbstractComplexSequence(initial : IComplex, maxIterations : int)
+    + iterator Iterator<IComplex>
+    + computeNext(previous : IComplex) : IComplex
+}
+
+Class JuliaSequence extends AbstractComplexSequence{
+    - final c : IComplex
+    + JuliaSequence(c : IComplex, maxIterations : int)
+    + computeNext(previous : IComplex) : IComplex
+    + getC() : IComplex
+}
+
+
+
 IFractalGenerator --> IFractalImage : << produces >>
 IFractalGenerator --> IComplexSequence : << uses >>
 ```
