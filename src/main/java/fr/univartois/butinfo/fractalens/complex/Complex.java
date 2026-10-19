@@ -1,5 +1,7 @@
 package fr.univartois.butinfo.fractalens.complex;
 
+import java.util.Objects;
+
 public class Complex implements IComplex{
 
 
@@ -62,6 +64,11 @@ public class Complex implements IComplex{
     }
 
     @Override
+    public String toString() {
+        return a+" + "+b+"i";
+    }
+
+    @Override
     public IComplex divide(IComplex other) {
         double c = other.getRealPart();
         double d = other.getImaginaryPart();
@@ -69,4 +76,16 @@ public class Complex implements IComplex{
         return new Complex((a*c+b*d)/denominator,(b*c-a*d)/denominator);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || !(obj instanceof IComplex)) return false;
+        IComplex other = (IComplex) obj;
+        return this.a == other.getRealPart() && this.b == other.getImaginaryPart();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(a, b);
+    }
 }
