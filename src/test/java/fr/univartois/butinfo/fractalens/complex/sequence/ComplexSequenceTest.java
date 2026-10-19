@@ -26,6 +26,7 @@ package fr.univartois.butinfo.fractalens.complex.sequence;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import fr.univartois.butinfo.fractalens.complex.Complex;
 import org.junit.jupiter.api.Test;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
@@ -49,7 +50,6 @@ class ComplexSequenceTest {
      * @return The created complex number.
      */
     private static IComplex createComplex(double realPart, double imaginaryPart) {
-        // TODO Create here an instance of your class implementing IComplex.
         return new Complex(realPart, imaginaryPart);
     }
 
@@ -65,8 +65,7 @@ class ComplexSequenceTest {
      */
     private static IComplexSequence createJuliaSequence(
             IComplex first, IComplex constant, int nbTerms) {
-            JuliaSequence julia = new JuliaSequence(first, constant, nbTerms);
-        return null;
+            return new JuliaSequence(first, constant, nbTerms);
     }
 
     /**
