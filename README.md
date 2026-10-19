@@ -34,6 +34,13 @@ interface IComplexPlane {
     + {abstract} asComplex(row : int, column : int) : IComplex
 }
 
+class CompexPlane {
+    - final int width
+    - final int height
+    + constructor(width : int, height : int) 
+    + asComplex(row : int, column : int) : IComplex 
+}
+
 IComplexPlane --> IComplex : << creates >>
 
 ' ----------------- '
@@ -67,6 +74,23 @@ interface IFractalGenerator {
     + {abstract} computePixelColor(row : int, column : int) : Color
     + {abstract} saveImage() : void
 }
+
+abstract class AbstractComplexSequence implements IComplexSequence {
+    - final initial : IComplex
+    - final maxIterations : int
+    * AbstractComplexSequence(initial : IComplex, maxIterations : int)
+    + iterator Iterator<IComplex>
+    + computeNext(previous : IComplex) : IComplex
+}
+
+Class JuliaSequence extends AbstractComplexSequence{
+    - final c : IComplex
+    + JuliaSequence(c : IComplex, maxIterations : int)
+    + computeNext(previous : IComplex) : IComplex
+    + getC() : IComplex
+}
+
+
 
 IFractalGenerator --> IFractalImage : << produces >>
 IFractalGenerator --> IComplexSequence : << uses >>
