@@ -50,7 +50,7 @@ class ComplexSequenceTest {
      */
     private static IComplex createComplex(double realPart, double imaginaryPart) {
         // TODO Create here an instance of your class implementing IComplex.
-        return null;
+        return new Complex(realPart, imaginaryPart);
     }
 
     /**
@@ -65,8 +65,6 @@ class ComplexSequenceTest {
      */
     private static IComplexSequence createJuliaSequence(
             IComplex first, IComplex constant, int nbTerms) {
-        // TODO Create here an instance of your class implementing IComplexSequence for
-        // Julia's sequence.
             JuliaSequence julia = new JuliaSequence(first, constant, nbTerms);
         return null;
     }
