@@ -47,7 +47,7 @@ class ComplexTest {
      */
     private static IComplex createComplex(double realPart, double imaginaryPart) {
         // TODO Create here an instance of your class implementing IComplex.
-        return null;
+        return new Complex(realPart, imaginaryPart);
     }
 
     /**
