@@ -19,7 +19,4 @@ public abstract class AbstractComplexSequence implements IComplexSequence {
         return new ComplexIterator(this, this.initial, this.maxIterations);
     }
 
-    @Override
-    public abstract IComplex computeNext(IComplex previous);
-
 }
