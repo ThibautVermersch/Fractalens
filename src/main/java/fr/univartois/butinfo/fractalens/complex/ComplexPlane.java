@@ -1,6 +1,6 @@
 package fr.univartois.butinfo.fractalens.complex;
 
-public class ComplexPlane {
+public class ComplexPlane implements IComplexPlane{
 
     private final int height;
     private final int width;
