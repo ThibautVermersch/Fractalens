@@ -4,16 +4,12 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 import java.util.Iterator;
 
-public class JuliaSequence implements IComplexSequence{
-
-    private final IComplex z0;
+public class JuliaSequence extends AbstractComplexSequence{
     private final IComplex c;
-    private final int maxIterations;
 
-    public JuliaSequence(IComplex z0, IComplex c, int maxIterations) {
-        this.z0 = z0;
+    public JuliaSequence(IComplex initial ,IComplex c, int maxIterations) {
+        super(initial, maxIterations);
         this.c = c;
-        this.maxIterations = maxIterations;
     }
 
     @Override
@@ -22,10 +18,7 @@ public class JuliaSequence implements IComplexSequence{
         return previous.multiply(previous).add(c);
     }
 
-    @Override
-    public Iterator<IComplex> iterator() {
-
-        return null;
+    public IComplex getC() {
+        return c;
     }
-
 }
