@@ -34,6 +34,13 @@ interface IComplexPlane {
     + {abstract} asComplex(row : int, column : int) : IComplex
 }
 
+class CompexPlane {
+    - final int width
+    - final int height
+    + constructor(width : int, height : int) 
+    + asComplex(row : int, column : int) : IComplex 
+}
+
 IComplexPlane --> IComplex : << creates >>
 
 ' ----------------- '
