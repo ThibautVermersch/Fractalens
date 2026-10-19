@@ -187,8 +187,7 @@ class ComplexIteratorTest {
     private record FakeSequence(UnaryOperator<IComplex> function)
             implements IComplexSequence {
 
-        @Overridegit add src/test/java/fr/univartois/butinfo/fractalens/complex/sequence/ComplexIteratorTest.java
-        git status
+        @Override
         public IComplex computeNext(IComplex previous) {
             return function.apply(previous);
         }
