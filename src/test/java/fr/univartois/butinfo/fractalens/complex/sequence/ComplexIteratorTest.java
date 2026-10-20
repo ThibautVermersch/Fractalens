@@ -53,13 +53,13 @@ class ComplexIteratorTest {
      * Test method for {@link ComplexIterator#next()}.
      */
     @Test
-    void testNextComputesTermsFromFirstTerm() {
+    void testNextReturnsTermsFromFirstTerm() {
         IComplexSequence sequence = new FakeSequence(z -> new FakeComplex(z.abs() / 2));
         Iterator<IComplex> iterator = new ComplexIterator(sequence, new FakeComplex(1), 10);
 
+        assertEquals(new FakeComplex(1), iterator.next());
         assertEquals(new FakeComplex(0.5), iterator.next());
         assertEquals(new FakeComplex(0.25), iterator.next());
-        assertEquals(new FakeComplex(0.125), iterator.next());
     }
 
     /**
@@ -89,9 +89,9 @@ class ComplexIteratorTest {
         Iterator<IComplex> iterator = new ComplexIterator(sequence, new FakeComplex(1), 50);
 
         assertTrue(iterator.hasNext());
-        assertEquals(new FakeComplex(2), iterator.next());
+        assertEquals(new FakeComplex(1), iterator.next());
         assertTrue(iterator.hasNext());
-        assertEquals(new FakeComplex(4), iterator.next());
+        assertEquals(new FakeComplex(2), iterator.next());
         assertFalse(iterator.hasNext());
     }
 
