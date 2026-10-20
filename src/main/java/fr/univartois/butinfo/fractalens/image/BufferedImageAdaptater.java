@@ -63,8 +63,16 @@ public class BufferedImageAdaptater implements IFractalImage{
     @Override
     public void saveAs(String path) throws IOException {
         File file = new File(path);
-        ImageIO.write(this.image, "png", file);
-        System.out.println("Image saved as " + path);
+        String format = "png";
+        int lastDotIndex = path.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < path.length() - 1) {
+            format = path.substring(lastDotIndex + 1);
+        }
+
+        boolean success = ImageIO.write(this.image, format, file);
+        if (!success) {
+            throw new IOException("Aucun écrivain d'image trouvé pour le format : " + format);
+        }
     }
 
     /**
