@@ -1,129 +1,113 @@
-
 package fr.univartois.butinfo.fractalens;
 
-import java.util.function.BiFunction;
+import java.awt.Color;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.ComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
+import fr.univartois.butinfo.fractalens.complex.TranslatedComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.ZoomComplexPlane;
+import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
+import fr.univartois.butinfo.fractalens.generator.ColorMaskStrategy;
+import fr.univartois.butinfo.fractalens.generator.FractalGenerator;
+import fr.univartois.butinfo.fractalens.generator.GradientColorStrategy;
 import fr.univartois.butinfo.fractalens.generator.GrayScaleStrategy;
 import fr.univartois.butinfo.fractalens.generator.IColorStrategy;
-import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
-import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
-import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
-import fr.univartois.butinfo.fractalens.generator.FractalGenerator;
 import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
+import fr.univartois.butinfo.fractalens.generator.InvertedColorStrategy;
+import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
- * The Fractalens class is the entry point of the application.
- * <p>
- * It generates an image of the Julia fractal for {@code c = -0.4 + 0.6i} in grey
- * scale, and saves it in the file whose name is given as first argument.
+ * Entry point of the Fractalens application for Sprint 3.
  *
- * @author Yeleen Cividino
- *
+ * @author Thibaut Vermersch
  * @version 0.1.0
  */
 public final class Fractalens {
 
     /**
-     * The height of the generated image, measured in pixels.
+     * Width of the generated images in pixels.
      */
-    static final int HEIGHT = 600;
+    private static final int WIDTH = 800;
 
     /**
-     * The width of the generated image, measured in pixels.
+     * Height of the generated images in pixels.
      */
-    static final int WIDTH = 800;
+    private static final int HEIGHT = 800;
 
     /**
-     * The maximum number of iterations to perform for each pixel.
+     * Maximum number of iterations to compute for each pixel.
      */
-    static final int MAX_ITERATIONS = 100;
+    private static final int MAX_ITERATIONS = 250;
 
     /**
-     * The zoom factor to apply on the complex plane.
+     * Zoom factor applied on the complex plane.
      */
-    static final double ZOOM = 0.004;
+    private static final double ZOOM = 0.001;
 
     /**
-     * The constant used in the definition of the Julia sequence.
-     */
-    static final IComplex JULIA_CONSTANT = new Complex(-0.4, 0.6);
-
-    /**
-     * The name of the file in which to save the image when no name is given.
-     */
-    static final String DEFAULT_OUTPUT_FILE = "julia.png";
-
-    /**
-     * Disables instantiation of this class.
+     * Disables instantiation of this utility class.
      */
     private Fractalens() {
-        // This class only provides static methods.
+        // Utility class
     }
 
     /**
-     * Generates an image of the Julia fractal and saves it in a file.
+     * Main entry point generating the two figures required for Sprint 3.
      *
-     * @param args The command line arguments. The first one, if any, is the name of
-     *        the file in which to save the image.
+     * @param args Command line arguments specifying output filenames.
      */
     public static void main(String[] args) {
-        IFractalGenerator generator = createGenerator(getOutputFile(args));
+        String fileFig1 = (args.length > 0) ? args[0] : "figure1.png";
+        String fileFig2 = (args.length > 1) ? args[1] : "figure2.png";
+
+        // Figure 1: c = -0.4 + 0.6i, center = 0.1 + 0.6i, yellow-to-red gradient
+        IColorStrategy palette1 = new GradientColorStrategy(MAX_ITERATIONS,Color.YELLOW, Color.RED);
+        createFigure(new Complex(-0.4, 0.6), new Complex(0.1, 0.6), palette1, fileFig1);
+
+        // Figure 2: c = 0.285 + 0.01i, center = -0.47 - 0.21i, inverted cyan
+        IColorStrategy gray = new GrayScaleStrategy(MAX_ITERATIONS);
+        IColorStrategy cyan = new ColorMaskStrategy(gray, false, true, true);
+        IColorStrategy invertedCyan = new InvertedColorStrategy(cyan);
+        createFigure(new Complex(0.285, 0.01), new Complex(-0.47, -0.21), invertedCyan, fileFig2);
+    }
+
+    /**
+     * Configures the complex plane with zoom and translation.
+     *
+     * @param center The target center point in the complex plane.
+     * @return The fully decorated complex plane.
+     */
+    private static IComplexPlane createConfiguredPlane(IComplex center) {
+        IComplexPlane base = new ComplexPlane(HEIGHT, WIDTH);
+        IComplexPlane zoomed = new ZoomComplexPlane(base, ZOOM);
+        return new TranslatedComplexPlane(zoomed, center);
+    }
+
+    /**
+     * Generates and saves a Julia fractal image according to specified parameters.
+     *
+     * @param c          The Julia sequence constant.
+     * @param center     The center point of the view.
+     * @param palette    The color strategy to apply.
+     * @param outputFile The destination file path.
+     */
+    private static void createFigure(IComplex c, IComplex center, IColorStrategy palette, String outputFile) {
+        IComplexPlane plane = createConfiguredPlane(center);
+        IFractalImage image = new BufferedImageAdaptater(WIDTH, HEIGHT);
+
+        IFractalGenerator generator = new FractalGenerator(
+                (z0, max) -> new JuliaSequence(z0, c, max),
+                image,
+                plane,
+                MAX_ITERATIONS,
+                palette,
+                outputFile
+        );
+
         generator.generateImage();
         generator.saveImage();
     }
-
-    /**
-     * Gives the name of the file in which to save the image.
-     *
-     * @param args The command line arguments.
-     *
-     * @return The first argument if there is one, or {@link #DEFAULT_OUTPUT_FILE}
-     *         otherwise.
-     */
-    static String getOutputFile(String[] args) {
-        return (args.length > 0) ? args[0] : DEFAULT_OUTPUT_FILE;
-    }
-
-    /**
-     * Creates the complex plane on which the fractal is drawn, zoomed with
-     * {@link #ZOOM}.
-     *
-     * @return The complex plane to use.
-     */
-    static IComplexPlane createPlane() {
-        return new ZoomComplexPlane(new ComplexPlane(HEIGHT, WIDTH), ZOOM);
-    }
-
-    /**
-     * Creates the function that builds the Julia sequence starting from the complex
-     * number corresponding to a pixel.
-     *
-     * @return The function creating a Julia sequence from its first term and its
-     *         maximum number of terms.
-     */
-    static BiFunction<IComplex, Integer, IComplexSequence> createJuliaSequenceFactory() {
-        return (z0, nbTerms) -> new JuliaSequence(z0, JULIA_CONSTANT, nbTerms);
-    }
-
-    /**
-     * Creates the fractal generator, configured with the characteristics of the image
-     * to generate.
-     *
-     * @param outputFile The name of the file in which to save the image.
-     *
-     * @return The configured fractal generator.
-     */
-    static IFractalGenerator createGenerator(String outputFile) {
-        IFractalImage image = new BufferedImageAdaptater(WIDTH, HEIGHT);
-        IColorStrategy palette = new GrayScaleStrategy(MAX_ITERATIONS);
-        return new FractalGenerator(createJuliaSequenceFactory(), image, createPlane(),
-                MAX_ITERATIONS, palette, outputFile);
-    }
-
 }
