@@ -28,6 +28,6 @@ public class FixedColorStrategy implements IColorStrategy{
         if (iterations >= maxIterations) {
             return Color.BLACK;
         }
-        return rainbow[(int)((iterations/(float)maxIterations)*10)];
+        return rainbow[(int)((iterations/(float)maxIterations)* rainbow.length)];
     }
 }
