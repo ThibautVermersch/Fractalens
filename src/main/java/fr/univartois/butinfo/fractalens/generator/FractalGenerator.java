@@ -67,8 +67,8 @@ public class FractalGenerator implements IFractalGenerator{
      */
     @Override
     public IFractalImage generateImage(){
-        for (int row = 0, row < image.getWidth(), row++) {
-            for (int column = 0, column < image.getHeight(), column++) {
+        for (int row = 0; row < image.getWidth(); row++) {
+            for (int column = 0; column < image.getHeight(); column++) {
                 image.setColor(row,column,computePixelColor(row,column));
             }
         }
@@ -90,9 +90,9 @@ public class FractalGenerator implements IFractalGenerator{
         IComplex z0 = plane.asComplex(row,column);
 
         IComplexSequence sequence = sequenceFactory.apply(z0, maxIterations);
-        int itetations = 0;
+        int iterations = 0;
         for (IComplex term : sequence) {
-            itetations ++;
+            iterations ++;
         }
 
         return  colorStrategy.getColor(iterations);
