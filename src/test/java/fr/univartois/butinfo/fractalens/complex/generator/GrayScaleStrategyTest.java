@@ -1,7 +1,8 @@
-package fr.univartois.butinfo.fractalens.generator;
+package fr.univartois.butinfo.fractalens.complex.generator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import fr.univartois.butinfo.fractalens.generator.GrayScaleStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;

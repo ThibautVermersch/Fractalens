@@ -47,7 +47,17 @@ tasks.named('test') {
 jacoco {
     toolVersion = '0.8.15'
 }
+tasks.named('jacocoTestReport') {
+    dependsOn tasks.named('test')
 
+    classDirectories.setFrom(
+            files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: [
+                        'fr/univartois/butinfo/fractalens/Fractalens.*'
+                ])
+            })
+    )
+}
 // The configuration of the SonarQube static analysis.
 sonar {
     properties {

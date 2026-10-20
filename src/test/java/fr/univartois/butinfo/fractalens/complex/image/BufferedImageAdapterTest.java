@@ -1,4 +1,4 @@
-package fr.univartois.butinfo.fractalens.complex;
+package fr.univartois.butinfo.fractalens.complex.image;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;

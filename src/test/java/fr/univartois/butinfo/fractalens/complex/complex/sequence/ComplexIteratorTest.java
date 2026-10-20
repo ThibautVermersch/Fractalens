@@ -21,7 +21,7 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package fr.univartois.butinfo.fractalens.complex.sequence;
+package fr.univartois.butinfo.fractalens.complex.complex.sequence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -32,6 +32,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.UnaryOperator;
 
+import fr.univartois.butinfo.fractalens.complex.sequence.ComplexIterator;
+import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
 import org.junit.jupiter.api.Test;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
