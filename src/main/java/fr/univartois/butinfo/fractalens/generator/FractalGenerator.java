@@ -19,9 +19,11 @@ public class FractalGenerator implements IFractalGenerator{
      * @param sequenceFactory
      * @param image
      */
-    public FractalGenerator(BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory, IFractalImage image) {
+    public FractalGenerator(BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory, IFractalImage image,
+            IComplexPlane plane) {
         this.sequenceFactory = sequenceFactory;
         this.image = image;
+        this.plane = plane;
     }
 
     /**
