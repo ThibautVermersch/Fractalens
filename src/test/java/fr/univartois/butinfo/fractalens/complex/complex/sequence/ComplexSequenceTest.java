@@ -21,12 +21,14 @@
  * USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package fr.univartois.butinfo.fractalens.complex.sequence;
+package fr.univartois.butinfo.fractalens.complex.complex.sequence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
+import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
+import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import org.junit.jupiter.api.Test;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;

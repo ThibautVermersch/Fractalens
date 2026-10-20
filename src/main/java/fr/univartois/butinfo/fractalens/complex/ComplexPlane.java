@@ -29,8 +29,8 @@ public class ComplexPlane implements IComplexPlane{
      * @return
      */
     public IComplex asComplex(int row, int column) {
-        double a = column - (width/2);
-        double b = (height/2) - row;
+        double a = column - (width/2.);
+        double b = (height/2.) - row;
         return new Complex(a, b);
     }
 }

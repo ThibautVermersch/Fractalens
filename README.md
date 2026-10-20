@@ -30,18 +30,41 @@ interface IComplex {
     + {abstract} divide(other : IComplex) : IComplex
 }
 
+class Complex implements IComplex {
+    - final realPart : double
+    - final imaginaryPart : double
+    + Complex(realPart : double, imaginaryPart : double)
+    + getRealPart() : double
+    + getImaginaryPart() : double
+    + abs() : double
+    + negate() : IComplex
+    + conjugate() : IComplex
+    + add(other : IComplex) : IComplex
+    + subtract(other : IComplex) : IComplex
+    + multiply(value : double) : IComplex
+    + multiply(other : IComplex) : IComplex
+    + divide(other : IComplex) : IComplex
+}
+
 interface IComplexPlane {
     + {abstract} asComplex(row : int, column : int) : IComplex
 }
 
-class CompexPlane {
-    - final int width
-    - final int height
-    + constructor(width : int, height : int) 
-    + asComplex(row : int, column : int) : IComplex 
+class ComplexPlane implements IComplexPlane {
+    - final width : int
+    - final height : int
+    + ComplexPlane(width : int, height : int)
+    + asComplex(row : int, column : int) : IComplex
 }
 
-IComplexPlane --> IComplex : << creates >>
+class ZoomComplexPlane implements IComplexPlane {
+    - final scale : double
+    + ZoomComplexPlane(decorated : IComplexPlane, scale : double)
+    + asComplex(row : int, column : int) : IComplex
+}
+
+ZoomComplexPlane o--> IComplexPlane : << decorates >>
+IComplexPlane ..> IComplex : << creates >>
 
 ' ----------------- '
 ' Complex Sequences '
@@ -52,7 +75,46 @@ interface IComplexSequence extends Iterable<IComplex> {
     + {abstract} iterator() : Iterator<IComplex>
 }
 
-IComplexSequence --> IComplex : << generates >>
+abstract class AbstractComplexSequence implements IComplexSequence {
+    - final initial : IComplex
+    - final maxIterations : int
+    # AbstractComplexSequence(initial : IComplex, maxIterations : int)
+    + iterator() : Iterator<IComplex>
+    + {abstract} computeNext(previous : IComplex) : IComplex
+}
+
+class JuliaSequence extends AbstractComplexSequence {
+    - final c : IComplex
+    + JuliaSequence(first : IComplex, c : IComplex, maxIterations : int)
+    + computeNext(previous : IComplex) : IComplex
+    + getC() : IComplex
+}
+
+class ComplexSequenceIterator implements Iterator<IComplex> {
+    - final sequence : IComplexSequence
+    - current : IComplex
+    - final maxIterations : int
+    - iterations : int
+    + ComplexSequenceIterator(sequence : IComplexSequence, initial : IComplex, maxIterations : int)
+    + hasNext() : boolean
+    + next() : IComplex
+}
+
+AbstractComplexSequence ..> ComplexSequenceIterator : << instantiates >>
+ComplexSequenceIterator --> IComplexSequence : << iterates >>
+IComplexSequence ..> IComplex : << generates >>
+
+' ---------------- '
+' Color Strategies '
+' ---------------- '
+
+interface IColorStrategy {
+    + {abstract} getColor(iterations : int, maxIterations : int) : Color
+}
+
+class GrayscaleStrategy implements IColorStrategy {
+    + getColor(iterations : int, maxIterations : int) : Color
+}
 
 ' -------------- '
 ' Image Handling '
@@ -65,6 +127,17 @@ interface IFractalImage {
     + {abstract} saveAs(path : String) : void
 }
 
+class BufferedImageAdapter implements IFractalImage {
+    - final image : BufferedImage
+    + BufferedImageAdapter(image : BufferedImage)
+    + BufferedImageAdapter(width : int, height : int)
+    + getHeight() : int
+    + getWidth() : int
+    + setColor(row : int, column : int, color : Color) : void
+    + saveAs(path : String) : void
+    + getBufferedImage() : BufferedImage
+}
+
 ' ------------------ '
 ' Fractal Generation '
 ' ------------------ '
@@ -75,25 +148,20 @@ interface IFractalGenerator {
     + {abstract} saveImage() : void
 }
 
-abstract class AbstractComplexSequence implements IComplexSequence {
-    - final initial : IComplex
+class FractalGenerator implements IFractalGenerator {
     - final maxIterations : int
-    * AbstractComplexSequence(initial : IComplex, maxIterations : int)
-    + iterator Iterator<IComplex>
-    + computeNext(previous : IComplex) : IComplex
+    - final path : String
+    + FractalGenerator(sequenceFactory : BiFunction<IComplex, Integer, IComplexSequence>, image : IFractalImage, plane : IComplexPlane, maxIterations : int, colorStrategy : IColorStrategy, path : String)
+    + generateImage() : IFractalImage
+    + computePixelColor(row : int, column : int) : Color
+    + saveImage() : void
 }
 
-Class JuliaSequence extends AbstractComplexSequence{
-    - final c : IComplex
-    + JuliaSequence(c : IComplex, maxIterations : int)
-    + computeNext(previous : IComplex) : IComplex
-    + getC() : IComplex
-}
-
-
-
-IFractalGenerator --> IFractalImage : << produces >>
-IFractalGenerator --> IComplexSequence : << uses >>
+FractalGenerator o--> IFractalImage : image
+FractalGenerator o--> IComplexPlane : plane
+FractalGenerator o--> IColorStrategy : colorStrategy
+FractalGenerator ..> IComplexSequence : creates via factory
+IFractalGenerator ..> IFractalImage : << produces >>
 ```
 
 ## Feature list
