@@ -10,9 +10,35 @@ import java.util.function.BiFunction;
 
 public class FractalGenerator implements IFractalGenerator{
 
+    /**
+     * Construct the sequence starting from z0 and the maximum number of iterations.
+     */
     private  final BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory;
+
+    /**
+     * The image to generate.
+     */
     private final IFractalImage image;
+
+    /**
+     * The plane on which the fractal is drawn.
+     */
     private final IComplexPlane plane;
+
+    /**
+     * The maximum number of iterations to compute.
+     */
+    private final int maxIterations;
+
+    /**
+     * The color strategy to use.
+     */
+    private final IColorStrategy colorStrategy;
+
+    /**
+     * The path of the output file.
+     */
+    private final String path;
 
     /**
      * Constructor
@@ -20,10 +46,14 @@ public class FractalGenerator implements IFractalGenerator{
      * @param image
      */
     public FractalGenerator(BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory, IFractalImage image,
-            IComplexPlane plane) {
+            IComplexPlane plane, int maxIterations, IColorStrategy colorStrategy,
+            String path) {
         this.sequenceFactory = sequenceFactory;
         this.image = image;
         this.plane = plane;
+        this.maxIterations = maxIterations;
+        this.colorStrategy = colorStrategy;
+        this.path = path;
     }
 
     /**
@@ -31,6 +61,7 @@ public class FractalGenerator implements IFractalGenerator{
      *
      * @return The generated image.
      */
+    @Override
     public IFractalImage generateImage(){
         for (int row = 0, row < image.getWidth(), row++) {
             for (int column = 0, column < image.getHeight(), column++) {
@@ -50,6 +81,7 @@ public class FractalGenerator implements IFractalGenerator{
      *
      * @return The computed color for the pixel.
      */
+    @Override
     public Color computePixelColor(int row, int column){
         return null;
     }
@@ -57,7 +89,8 @@ public class FractalGenerator implements IFractalGenerator{
     /**
      * Saves the generated image in the output file.
      */
+    @Override
     public void saveImage(){
-        return;
+        image.saveAs(path);
     }
 }
