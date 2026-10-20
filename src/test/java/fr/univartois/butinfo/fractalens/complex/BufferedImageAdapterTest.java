@@ -1,12 +1,12 @@
 package fr.univartois.butinfo.fractalens.complex;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the {@link BufferedImageAdaptater} class.
@@ -71,5 +71,31 @@ public class BufferedImageAdapterTest {
         assertTrue(tempFile.exists());
         assertTrue(tempFile.canRead());
         assertTrue(tempFile.length() > 0);
+    }
+
+    /**
+     * Test that saving an image without an extension uses the default format.
+     * @throws IOException If an I/O error occurs when writing the file.
+     */
+    @Test
+    void testSaveWithoutExtensionUsesDefaultFormat() throws IOException {
+        File tempFile = File.createTempFile("test_no_ext", "");
+        tempFile.deleteOnExit();
+        adaptater.saveAs(tempFile.getAbsolutePath());
+        assertTrue(tempFile.exists());
+        assertTrue(tempFile.length() > 0);
+    }
+
+    /**
+     * Test that an exception is thrown when saving an image with an invalid format.
+     */
+    @Test
+    void testSaveWithInvalidFormatThrowsException() {
+        File tempFile = new File("test.formatinconnu1234");
+        tempFile.deleteOnExit();
+
+        assertThrows(IOException.class, () -> {
+            adaptater.saveAs(tempFile.getAbsolutePath());
+        });
     }
 }
