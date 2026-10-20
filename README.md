@@ -105,7 +105,7 @@ IFractalGenerator --> IComplexSequence : << uses >>
 | Scaled complex plane                                   |                             |           |
 | Translated complex plane                               |                             |           |
 | Sequence of complex numbers                            |                             |           |
-| Iterator over a sequence of complex numbers            |                             |           |
+| Iterator over a sequence of complex numbers            |         Iterator                    |    Yeleen       |
 | Julia sequence                                         |                             |           |
 | Mandelbrot sequence                                    |                             |           |
 | Multijulia sequence                                    |                             |           |
@@ -115,10 +115,10 @@ IFractalGenerator --> IComplexSequence : << uses >>
 | Grey scale palette                                     |                             |           |
 | Red/Green/Blue/... scale palette                       |                             |           |
 | Inverted color palette                                 |                             |           |
-| Gradient-based color palette                           |                             |           |
+| Gradient-based color palette                           |    Strategy                       |     Yeleen      |
 | Predefined color palette                               |                             |           |
 | `BufferedImage` used as an `IFractalImage`             |                             |           |
-| Static image generation                                |                             |           |
+| Static image generation                                |                             |        Yeleen   |
 | Scale-based animated image generation                  |                             |           |
 | Rotation-based animated image generation               |                             |           |
 | Configuration of the fractal generator                 |                             |           |
