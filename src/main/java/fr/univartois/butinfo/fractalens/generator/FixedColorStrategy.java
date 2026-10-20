@@ -10,7 +10,7 @@ public class FixedColorStrategy implements IColorStrategy{
         this.maxIterations = maxIterations;
     }
 
-    private Color[] rainbow = {
+    static private Color[] rainbow = {
             new Color(200, 0, 0),
             new Color(200, 100, 0),
             new Color(200, 150, 0),
@@ -28,6 +28,6 @@ public class FixedColorStrategy implements IColorStrategy{
         if (iterations >= maxIterations) {
             return Color.BLACK;
         }
-        return rainbow[(int)((iterations/(float)maxIterations)*10)];
+        return rainbow[(int)((iterations/(float)maxIterations)* rainbow.length)];
     }
 }
