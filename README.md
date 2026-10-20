@@ -112,7 +112,7 @@ interface IColorStrategy {
     + {abstract} getColor(iterations : int, maxIterations : int) : Color
 }
 
-class GrayscaleColorStrategy implements IColorStrategy {
+class GrayscaleStrategy implements IColorStrategy {
     + getColor(iterations : int, maxIterations : int) : Color
 }
 
