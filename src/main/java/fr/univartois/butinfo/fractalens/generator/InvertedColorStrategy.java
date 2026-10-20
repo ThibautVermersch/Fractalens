@@ -15,7 +15,7 @@ public class InvertedColorStrategy implements IColorStrategy{
     private static final int MAX_COMPONENT = 255;
 
     /**
-     * Constructor
+     * Constructor of the inverted color strategy
      * @param decorated
      */
     public InvertedColorStrategy(IColorStrategy decorated) {
