@@ -25,7 +25,7 @@ public class ColorMaskStrategy implements IColorStrategy {
     private final double blueCoefficient;
 
     /**
-     * Constructor
+     * Creates a new ColorMaskStrategy keeping or removing each channel.
      * @param decorated
      * @param keepRed
      * @param keepGreen
@@ -35,6 +35,13 @@ public class ColorMaskStrategy implements IColorStrategy {
         this(decorated, keepRed ? 1.0 : 0.0, keepGreen ? 1.0 : 0.0, keepBlue ? 1.0 : 0.0);
     }
 
+    /**
+     * Creates a new ColorMaskStrategy scaling each channel by a coefficient.
+     * @param decorated
+     * @param redCoefficient
+     * @param greenCoefficient
+     * @param blueCoefficient
+     */
     public ColorMaskStrategy(IColorStrategy decorated, double redCoefficient,
             double greenCoefficient, double blueCoefficient) {
         checkCoefficient(redCoefficient);
@@ -46,6 +53,10 @@ public class ColorMaskStrategy implements IColorStrategy {
         this.blueCoefficient = blueCoefficient;
     }
 
+    /**
+     * Checks that the coefficient is between 0.0 and 1.0
+     * @param coefficient
+     */
     private static void checkCoefficient(double coefficient) {
         if (!(coefficient >= 0.0 && coefficient <= 1.0)) {
             throw new IllegalArgumentException(
@@ -53,6 +64,11 @@ public class ColorMaskStrategy implements IColorStrategy {
         }
     }
 
+    /**
+     * Returns the color of the decorated strategy multiplied by the coefficients
+     * @param iterations
+     * @return
+     */
     @Override
     public Color getColor(int iterations) {
         Color baseColor = decorated.getColor(iterations);
