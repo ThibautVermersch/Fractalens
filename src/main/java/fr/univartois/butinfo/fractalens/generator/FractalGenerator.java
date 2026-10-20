@@ -83,7 +83,15 @@ public class FractalGenerator implements IFractalGenerator{
      */
     @Override
     public Color computePixelColor(int row, int column){
-        return null;
+        IComplex z0 = plane.asComplex(row,column);
+
+        IComplexSequence sequence = sequenceFactory.apply(z0, maxIterations);
+        int itetations = 0;
+        for (IComplex term : sequence) {
+            itetations ++;
+        }
+
+        return  colorStrategy.getColor(iterations);
     }
 
     /**
