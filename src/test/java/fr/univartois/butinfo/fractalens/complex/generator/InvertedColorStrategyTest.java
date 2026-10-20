@@ -14,7 +14,9 @@ import org.junit.jupiter.api.Test;
 
 class InvertedColorStrategyTest {
 
-
+    /**
+     * Each component must be subtracted from 255.
+     */
     @Test
     void testGetColorSubtractsEachComponentFrom255() {
         IColorStrategy strategy = new InvertedColorStrategy(i -> new Color(10, 100, 200));
@@ -22,7 +24,9 @@ class InvertedColorStrategyTest {
         assertEquals(new Color(245, 155, 55), strategy.getColor(0));
     }
 
-
+    /**
+     * Black becomes white and white becomes black.
+     */
     @Test
     void testGetColorOnBlackAndWhite() {
         assertEquals(Color.WHITE,
@@ -31,7 +35,9 @@ class InvertedColorStrategyTest {
                 new InvertedColorStrategy(i -> Color.WHITE).getColor(0));
     }
 
-
+    /**
+     * The number of iterations must be given to the decorated strategy.
+     */
     @Test
     void testGetColorPassesIterationsToDecorated() {
         List<Integer> received = new ArrayList<>();
@@ -45,6 +51,9 @@ class InvertedColorStrategyTest {
         assertEquals(List.of(42), received);
     }
 
+    /**
+     * Decorating twice must give back the original color.
+     */
     @Test
     void testGetColorTwiceGivesOriginalColor() {
         IColorStrategy original = i -> new Color(10, 100, 200);
@@ -54,7 +63,10 @@ class InvertedColorStrategyTest {
         assertEquals(original.getColor(0), twice.getColor(0));
     }
 
-
+    /**
+     * gray scale strategy: points that diverge at once (white) become black, while
+     * points that reach the maximum number of iterations (black) become white.
+     */
     @Test
     void testGetColorWithGrayScaleStrategy() {
         IColorStrategy strategy = new InvertedColorStrategy(new GrayScaleStrategy(50));
