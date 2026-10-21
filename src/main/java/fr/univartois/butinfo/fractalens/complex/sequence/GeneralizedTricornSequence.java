@@ -10,25 +10,42 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
     private final IComplex c;
 
     /**
+     * The minimum number of degrees of freedom for the sequence.
+     */
+    private static final int MIN_DEGREES = 2;
+
+    private final int degree;
+
+    /**
      * Constructor of the sequence
      * @param initial
      * @param c
      * @param maxIterations
      */
-    public GeneralizedTricornSequence(IComplex initial, IComplex c, int maxIterations) {
+    public GeneralizedTricornSequence(IComplex initial, IComplex c, int maxIterations,
+            int degree) {
         super(initial, maxIterations);
+        if (degree < MIN_DEGREES) {
+            throw new IllegalArgumentException("The degree must be at least " + MIN_DEGREES + ": " + degree);
+        }
         this.c = c;
+        this.degree = degree;
     }
 
     /**
-     * Computes the next term: the square of the conjugate of the previous one, plus the constant.
+     * Computes the next term: the conjugate of the previous
+     * one raised to the degree * of the sequence, plus the constant
      * @param previous The previous value in the sequence.
      *
      * @return
      */
     public IComplex computeNext(IComplex previous) {
         IComplex conjugate = previous.conjugate();
-        return conjugate.multiply(conjugate).add(c);
+        IComplex power = conjugate;
+        for (int i = 0; i < degree; i++) {
+            power = power.multiply(conjugate);
+        }
+        return power.add(c);
     }
 
     /**
@@ -37,5 +54,13 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
      */
     public IComplex getC() {
         return c;
+    }
+
+    /**
+     * Getter of the constant c.
+     * @return
+     */
+    public int getDegree() {
+        return degree;
     }
 }
