@@ -184,6 +184,9 @@ class ComplexIteratorTest {
             throw new UnsupportedOperationException();
         }
 
+        @Override
+        public IComplex squared() {throw new UnsupportedOperationException();}
+
     }
 
     /**

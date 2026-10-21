@@ -126,4 +126,10 @@ public interface IComplex {
      */
     IComplex pow(int exponent);
 
+    /**
+     * Squares this complex number.
+     *
+     * @return This complex number squared.
+     */
+    IComplex squared();
 }
