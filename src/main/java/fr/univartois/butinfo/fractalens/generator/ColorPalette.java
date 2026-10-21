@@ -2,7 +2,7 @@ package fr.univartois.butinfo.fractalens.generator;
 
 import java.awt.Color;
 
-    public enum ColorPalette{
+public enum ColorPalette{
         RAINBOW(new Color[] {
                 new Color(200, 0, 0),
                 new Color(200, 100, 0),
