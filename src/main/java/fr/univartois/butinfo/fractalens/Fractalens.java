@@ -8,6 +8,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.TranslatedComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.ZoomComplexPlane;
+import fr.univartois.butinfo.fractalens.complex.sequence.BurningShipSequence;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import fr.univartois.butinfo.fractalens.generator.ColorMaskStrategy;
 import fr.univartois.butinfo.fractalens.generator.FractalGenerator;
@@ -45,14 +46,12 @@ public final class Fractalens {
     /**
      * Zoom factor applied on the complex plane.
      */
-    private static final double ZOOM = 0.001;
+    private static final double ZOOM = 0.00015;
 
     /**
      * Disables instantiation of this utility class.
      */
-    private Fractalens() {
-        // Utility class
-    }
+    private Fractalens() {}
 
     /**
      * Main entry point generating the two figures required for Sprint 3.
@@ -62,6 +61,7 @@ public final class Fractalens {
     public static void main(String[] args) {
         String fileFig1 = (args.length > 0) ? args[0] : "figure1.png";
         String fileFig2 = (args.length > 1) ? args[1] : "figure2.png";
+        String fileFig3 = (args.length > 2) ? args[2] : "burningship.png";
 
         IColorStrategy palette1 = new GradientColorStrategy(MAX_ITERATIONS,Color.YELLOW, Color.RED);
         createFigure(new Complex(-0.4, 0.6), new Complex(0.1, 0.6), palette1, fileFig1);
@@ -70,6 +70,9 @@ public final class Fractalens {
         IColorStrategy cyan = new ColorMaskStrategy(gray, false, true, false);
         IColorStrategy invertedCyan = new InvertedColorStrategy(cyan);
         createFigure(new Complex(0.285, 0.01), new Complex(-0.47, -0.21), invertedCyan, fileFig2);
+
+        IColorStrategy paletteShip = new GradientColorStrategy(MAX_ITERATIONS, Color.BLACK, Color.CYAN);
+        createBurningShipFigure(new Complex(-1.75, -0.03), paletteShip, fileFig3);
     }
 
     /**
@@ -98,6 +101,17 @@ public final class Fractalens {
 
         IFractalGenerator generator = new FractalGenerator(
                 (z0, max) -> new JuliaSequence(z0, c, max),
+                image, plane, MAX_ITERATIONS, palette, outputFile);
+
+        generator.generateImage();
+        generator.saveImage();
+    }
+    private static void createBurningShipFigure(IComplex center, IColorStrategy palette, String outputFile) {
+        IComplexPlane plane = createConfiguredPlane(center);
+        IFractalImage image = new BufferedImageAdaptater(WIDTH, HEIGHT);
+
+        IFractalGenerator generator = new FractalGenerator(
+                (z0, max) -> new BurningShipSequence(z0, max),
                 image, plane, MAX_ITERATIONS, palette, outputFile);
 
         generator.generateImage();
