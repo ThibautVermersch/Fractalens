@@ -33,8 +33,8 @@ class GeneralizedTricornSequenceTest {
      * @return The created generalized Tricorn sequence.
      */
     private static IComplexSequence createGeneralizedTricornSequence(
-            IComplex first, IComplex constant, int degree, int nbTerms) {
-        return new GeneralizedTricornSequence(first, constant, degree, nbTerms);
+            IComplex first, IComplex constant, int nbTerms,  int degree) {
+        return new GeneralizedTricornSequence(first, constant, nbTerms, degree);
     }
 
     /**
@@ -44,7 +44,7 @@ class GeneralizedTricornSequenceTest {
     void testComputeNext() {
         IComplex z0 = createComplex(1, 1);
         IComplex c = createComplex(0, 0);
-        IComplexSequence tricorn = createGeneralizedTricornSequence(z0, c, 3, 50);
+        IComplexSequence tricorn = createGeneralizedTricornSequence(z0, c, 50, 3);
 
         IComplex z1 = createComplex(-2, -2);
         assertEquals(z1, tricorn.computeNext(z0));
@@ -60,21 +60,21 @@ class GeneralizedTricornSequenceTest {
     void testComputeNextWithConstant() {
         IComplex z0 = createComplex(1, 1);
         IComplex c = createComplex(1, 1);
-        IComplexSequence tricorn = createGeneralizedTricornSequence(z0, c, 3, 50);
+        IComplexSequence tricorn = createGeneralizedTricornSequence(z0, c, 50, 3);
 
         IComplex z1 = createComplex(-1, -1);
         assertEquals(z1, tricorn.computeNext(z0));
     }
 
     /**
-     * Test method for testsComputeNext with a degree of two.
+     * Test method for testsComputeNext with a degree of two
      */
     @Test
     void testComputeNextWithDegreeTwoIsTricorn() {
         IComplex z0 = createComplex(0.7, 0.4);
         IComplex c = createComplex(0.3, -0.2);
         IComplexSequence tricorn = new TricornSequence(z0, c, 50);
-        IComplexSequence generalized = createGeneralizedTricornSequence(z0, c, 2, 50);
+        IComplexSequence generalized = createGeneralizedTricornSequence(z0, c, 50, 2);
 
         IComplex z = z0;
         for (int i = 0; i < 5; i++) {
@@ -92,7 +92,7 @@ class GeneralizedTricornSequenceTest {
         IComplex c = createComplex(0, 0);
         int nbTerms = 50;
 
-        IComplexSequence tricorn = createGeneralizedTricornSequence(z0, c, 3, nbTerms);
+        IComplexSequence tricorn = createGeneralizedTricornSequence(z0, c, nbTerms, 3);
         int nbIterations = 0;
 
         for (var _ : tricorn) {
@@ -111,7 +111,7 @@ class GeneralizedTricornSequenceTest {
         IComplex c = createComplex(0.5, 0.5);
         int nbTerms = 50;
 
-        IComplexSequence tricorn = createGeneralizedTricornSequence(z0, c, 3, nbTerms);
+        IComplexSequence tricorn = createGeneralizedTricornSequence(z0, c, nbTerms, 3);
         int nbIterations = 0;
 
         for (var _ : tricorn) {
@@ -129,9 +129,9 @@ class GeneralizedTricornSequenceTest {
         IComplex zero = createComplex(0, 0);
 
         assertThrows(IllegalArgumentException.class,
-                () -> createGeneralizedTricornSequence(zero, zero, 1, 50));
+                () -> createGeneralizedTricornSequence(zero, zero, 50, 1));
         assertThrows(IllegalArgumentException.class,
-                () -> createGeneralizedTricornSequence(zero, zero, -3, 50));
+                () -> createGeneralizedTricornSequence(zero, zero, 50, -3));
     }
 
 }
