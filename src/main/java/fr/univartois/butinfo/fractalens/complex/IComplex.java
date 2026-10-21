@@ -112,4 +112,24 @@ public interface IComplex {
      */
     IComplex divide(IComplex other);
 
+    /**
+     * Raises this complex number to the given power.
+     * As for real numbers, this operation multiplies this complex number by itself
+     * {@code exponent} times. By convention, any complex number raised to the power
+     * {@code 0} is equal to {@code 1}.
+     *
+     * @param exponent The (non-negative) power to which this number is raised.
+     *
+     * @return The result of {@code this}<sup>{@code exponent}</sup>.
+     *
+     * @throws IllegalArgumentException If {@code exponent} is negative.
+     */
+    IComplex pow(int exponent);
+
+    /**
+     * Squares this complex number.
+     *
+     * @return This complex number squared.
+     */
+    IComplex squared();
 }

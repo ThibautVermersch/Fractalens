@@ -264,6 +264,30 @@ class ComplexTest {
 
     /**
      * Test method for
+     * {@link fr.univartois.butinfo.fractalens.complex.IComplex#squared()}.
+     */
+    @Test
+    void testSquareIComplex() {
+        IComplex zero = createComplex(0, 0);
+        IComplex one = createComplex(1, 0);
+        IComplex i = createComplex(0, 1);
+        IComplex z = createComplex(2, 2);
+
+        IComplex squareZ = z.multiply(z);
+        assertEquals(createComplex(0, 8), squareZ);
+
+        IComplex squareI = i.multiply(i);
+        assertEquals(createComplex(-1, 0), squareI);
+
+        IComplex squareOne = one.multiply(one);
+        assertEquals(createComplex(1, 0), squareOne);
+
+        IComplex squareZero = zero.multiply(zero);
+        assertEquals(createComplex(0, 0), squareZero);
+    }
+
+    /**
+     * Test method for
      * {@link fr.univartois.butinfo.fractalens.complex.IComplex#hashCode()}.
      */
     @Test
