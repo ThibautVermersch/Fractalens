@@ -112,4 +112,10 @@ public interface IComplex {
      */
     IComplex divide(IComplex other);
 
+    /**
+     * Squares this complex number.
+     *
+     * @return This complex number squared.
+     */
+    IComplex squared();
 }
