@@ -43,6 +43,7 @@ public final class Fractalens {
         String fileFig3 = (args.length > 2) ? args[2] : "burningship.png";
         String fileFig4 = (args.length > 3) ? args[3] : "mandelbrot.png";
         String fileFig5 = (args.length > 4) ? args[4] : "tricorn.png";
+        String fileFigLambda = (args.length > 5) ? args[5] : "lambda.png";
         // Figur 1
         IColorStrategy palette1 = new GradientColorStrategy(250, Color.YELLOW, Color.RED);
         createJuliaFigure(800, 800, new Complex(-0.4, 0.6), new Complex(0.1, 0.6), 0.001, 250, palette1, fileFig1);
@@ -55,15 +56,25 @@ public final class Fractalens {
 
         IColorStrategy baseGradient2 = new GradientColorStrategy(250, Color.WHITE, new Color(0, 50, 200));
         IColorStrategy burningFire = new InvertedColorStrategy(baseGradient2);
-        createBurningShipFigure(800, 800, new Complex(-1.75, -0.03), 0.00015, 250, burningFire, fileFig3);
+        createBurningShipFigure(800, 800, new Complex(-1.755, -0.03), 0.0001, 64, burningFire, fileFig3);
 
 
         IColorStrategy baseMandel = new GradientColorStrategy(250, Color.WHITE, new Color(230, 20, 120));
         IColorStrategy emeraldMandelbrot = new InvertedColorStrategy(baseMandel);
-        createMandelbrotFigure(800, 600, new Complex(-0.75, 0.0), 0.005, 250, emeraldMandelbrot, fileFig4);
+        createMandelbrotFigure(800, 600, new Complex(-0.75, 0.0), 0.003, 250, emeraldMandelbrot, fileFig4);
 
         IColorStrategy paletteTricorn = new GradientColorStrategy(250, Color.BLACK, new Color(0, 230, 140));
         createTricornFigure(800, 800,new Complex(-0.1, 0.0),0.004,250,paletteTricorn,fileFig5);
+
+        IColorStrategy paletteLambda = new GradientColorStrategy(100, new Color(15, 15, 30), new Color(255, 140, 20));
+        createLambdaFigure(
+                800, 800,
+                new Complex(0.0, 0.0),
+                0.003,
+                100,
+                paletteLambda,
+                fileFigLambda
+        );
     }
 
     /**
@@ -179,6 +190,28 @@ public final class Fractalens {
                 maxIterations,
                 palette,
                 outputFile);
+
+        generator.generateImage();
+        generator.saveImage();
+    }
+
+    private static void createLambdaFigure(
+            int width, int height, IComplex center, double zoom,int maxIterations, IColorStrategy palette, String outputFile) {
+        IComplexPlane plane = createConfiguredPlane(width, height, center, zoom);
+        IFractalImage image = new BufferedImageAdaptater(width, height);
+
+        IFractalGenerator generator = new FractalGenerator(
+                (z0, max) -> new GenericComplexSequence(
+                        z0,
+                        max,
+                        (prev, init) -> prev.pow(3).add(prev.multiply(-1.0)).add(init)
+                ),
+                image,
+                plane,
+                maxIterations,
+                palette,
+                outputFile
+        );
 
         generator.generateImage();
         generator.saveImage();
