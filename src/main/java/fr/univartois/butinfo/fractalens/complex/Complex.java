@@ -141,7 +141,6 @@ public class Complex implements IComplex{
         return new Complex(a*a - b*b,2*a*b);
     }
 
-
     /**
      * Returns a string representation of this complex number in algebraic form (a + bi).
      *

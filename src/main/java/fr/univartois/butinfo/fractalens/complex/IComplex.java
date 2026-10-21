@@ -119,10 +119,4 @@ public interface IComplex {
      */
     IComplex squared();
 
-    /**
-     * Raises this complex number to the power of an integer.
-     * @param power
-     * @return
-     */
-    IComplex pow(int power);
 }
