@@ -1,17 +1,16 @@
-package fr.univartois.butinfo.fractalens.generator;
+package fr.univartois.butinfo.fractalens.complex.generator;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.awt.Color;
-import java.util.function.BiFunction;
 
-import fr.univartois.butinfo.fractalens.complex.IComplex;
-import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
+import fr.univartois.butinfo.fractalens.generator.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
+import fr.univartois.butinfo.fractalens.complex.IComplex;
 import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 
@@ -33,7 +32,7 @@ class FractalGeneratorBuilderTest {
     @Test
     void testBuildWithoutZoomThrowsException() {
         this.builder.withSequence(ComplexSequenceType.MANDELBROT)
-                .withColorStrategy(new GradientColorStrategy(100, Color.BLACK, Color.WHITE));
+                .withColorStrategy(ColorStrategyType.GRAYSCALE);
 
         assertThrows(IllegalStateException.class, () -> this.builder.build());
     }
@@ -41,7 +40,7 @@ class FractalGeneratorBuilderTest {
     @Test
     void testBuildWithoutSequenceThrowsException() {
         this.builder.withZoom(0.001)
-                .withColorStrategy(new GradientColorStrategy(100, Color.BLACK, Color.WHITE));
+                .withColorStrategy(ColorStrategyType.GRAYSCALE);
 
         assertThrows(IllegalStateException.class, () -> this.builder.build());
     }
@@ -55,32 +54,45 @@ class FractalGeneratorBuilderTest {
     }
 
     @Test
-    void testSuccessfulBuildWithEnumSequence() {
+    void testSuccessfulBuildWithEnums() {
         IFractalGenerator generator = this.builder
                 .withDimensions(800, 600)
                 .withMaxIterations(200)
                 .withZoom(0.002)
                 .withCenter(new Complex(-0.75, 0.0))
                 .withSequence(ComplexSequenceType.MANDELBROT)
-                .withColorStrategyFactory(max -> new GradientColorStrategy(max, Color.BLUE, Color.YELLOW))
-                .withOutputFile("test_enum.png")
+                .withColorStrategy(ColorStrategyType.GRADIENT_BLUE_YELLOW)
+                .withOutputFile("test_enums.png")
                 .build();
 
         assertNotNull(generator);
     }
 
     @Test
-    void testSuccessfulBuildWithRawSequenceAndStrategy() {
-        int maxIterations = 150;
-        IColorStrategy strategy = new GradientColorStrategy(maxIterations, Color.RED, Color.YELLOW);
+    void testSuccessfulBuildWithRawObjects() {
+        int max = 150;
+        IComplex c = new Complex(0.3, 0.5);
+        IColorStrategy strategy = new GradientColorStrategy(max, Color.RED, Color.YELLOW);
+
         IFractalGenerator generator = this.builder
                 .withDimensions(600, 400)
-                .withMaxIterations(maxIterations)
+                .withMaxIterations(max)
                 .withZoom(0.002)
                 .withCenter(new Complex(-0.7, 0.2))
-                .withSequence(ComplexSequenceType.CUBIC_LAMBDA)
+                .withSequence((z0, m) -> new JuliaSequence(z0, c, m))
                 .withColorStrategy(strategy)
-                .withOutputFile("test.png")
+                .withOutputFile("test_raw.png")
+                .build();
+
+        assertNotNull(generator);
+    }
+
+    @Test
+    void testSuccessfulBuildWithColorStrategyFactory() {
+        IFractalGenerator generator = this.builder
+                .withZoom(0.005)
+                .withSequence(ComplexSequenceType.BURNING_SHIP)
+                .withColorStrategyFactory(GrayScaleStrategy::new)
                 .build();
 
         assertNotNull(generator);
@@ -109,7 +121,8 @@ class FractalGeneratorBuilderTest {
         assertThrows(NullPointerException.class, () -> this.builder.withCenter(null));
         assertThrows(NullPointerException.class, () -> this.builder.withOutputFile(null));
         assertThrows(NullPointerException.class, () -> this.builder.withSequence((ComplexSequenceType) null));
-        assertThrows(NullPointerException.class, () -> this.builder.withColorStrategy(null));
+        assertThrows(NullPointerException.class, () -> this.builder.withColorStrategy((ColorStrategyType) null));
+        assertThrows(NullPointerException.class, () -> this.builder.withColorStrategy((IColorStrategy) null));
         assertThrows(NullPointerException.class, () -> this.builder.withColorStrategyFactory(null));
     }
 }

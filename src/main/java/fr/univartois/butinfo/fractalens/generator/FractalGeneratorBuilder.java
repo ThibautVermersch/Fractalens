@@ -103,13 +103,37 @@ public class FractalGeneratorBuilder {
     }
 
     /**
-     *  Sets the sequence factory.
-     * @param type The sequence type
-     * @return The builder instance
+     * Sets the sequence factory using the enum type.
+     *
+     * @param type The sequence type.
+     * @return The builder instance.
      */
     public FractalGeneratorBuilder withSequence(ComplexSequenceType type) {
         Objects.requireNonNull(type, "Sequence type cannot be null.");
         this.sequenceFactory = type.getFactory();
+        return this;
+    }
+
+    /**
+     * Sets the sequence factory using a raw functional factory.
+     *
+     * @param factory Sequence functional factory.
+     * @return The builder instance.
+     */
+    public FractalGeneratorBuilder withSequence(BiFunction<IComplex, Integer, IComplexSequence> factory) {
+        this.sequenceFactory = Objects.requireNonNull(factory, "Sequence factory cannot be null.");
+        return this;
+    }
+
+    /**
+     * Sets the color strategy using the enum type.
+     *
+     * @param type The color strategy type.
+     * @return The builder instance.
+     */
+    public FractalGeneratorBuilder withColorStrategy(ColorStrategyType type) {
+        Objects.requireNonNull(type, "Color strategy type cannot be null.");
+        this.colorStrategyFactory = type::createStrategy;
         return this;
     }
 
@@ -140,7 +164,7 @@ public class FractalGeneratorBuilder {
      * Builds and wires the complete fractal generator.
      *
      * @return The configured {@link IFractalGenerator}.
-     * @throws IllegalStateException If the zoom or sequence factory was not defined.
+     * @throws IllegalStateException If the zoom, sequence factory or color strategy was not defined.
      */
     public IFractalGenerator build() {
         if (this.zoom == null) {
