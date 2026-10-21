@@ -5,6 +5,7 @@ import java.awt.Color;
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 import fr.univartois.butinfo.fractalens.complex.sequence.BurningShipSequence;
+import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
 import fr.univartois.butinfo.fractalens.complex.sequence.GenericComplexSequence;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import fr.univartois.butinfo.fractalens.generator.FractalGeneratorBuilder;
@@ -39,7 +40,7 @@ public final class Fractalens {
         // Figure 1 : Julia, c = -0.4 + 0.6i
         IComplex c1 = new Complex(-0.4, 0.6);
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new JuliaSequence(z0, c1, max))
+                .withSequence(ComplexSequenceType.JULIA)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(0.1, 0.6))
                 .withZoom(0.001)
@@ -51,7 +52,7 @@ public final class Fractalens {
         // Figure 2 : Julia, c = 0.285 + 0.01i
         IComplex c2 = new Complex(0.285, 0.01);
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new JuliaSequence(z0, c2, max))
+                .withSequence(ComplexSequenceType.JULIA_SPIRAL)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(-0.47, -0.21))
                 .withZoom(0.001)
@@ -63,7 +64,7 @@ public final class Fractalens {
 
         // Figure 3 : Burning Ship
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new BurningShipSequence(z0, max))
+                .withSequence(ComplexSequenceType.BURNING_SHIP)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(-1.755, -0.03))
                 .withZoom(0.0001)
@@ -75,8 +76,7 @@ public final class Fractalens {
 
         // Figure 4 : Mandelbrot
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new GenericComplexSequence(z0, max,
-                        (prev, init) -> prev.multiply(prev).add(init)))
+                .withSequence(ComplexSequenceType.MANDELBROT)
                 .withDimensions(800, 600)
                 .withCenter(new Complex(-0.75, 0.0))
                 .withZoom(0.003)
@@ -88,10 +88,7 @@ public final class Fractalens {
 
         // Figure 5 : Tricorn
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new GenericComplexSequence(z0, max, (prev, init) -> {
-                    IComplex conj = new Complex(prev.getRealPart(), -prev.getImaginaryPart());
-                    return conj.multiply(conj).add(init);
-                }))
+                .withSequence(ComplexSequenceType.TRICORN)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(-0.1, 0.0))
                 .withZoom(0.004)
@@ -102,8 +99,7 @@ public final class Fractalens {
 
         // Figure 6 : suite definie par une expression lambda, z^3 - z + z0
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new GenericComplexSequence(z0, max,
-                        (prev, init) -> prev.pow(3).add(prev.multiply(-1.0)).add(init)))
+                .withSequence(ComplexSequenceType.CUBIC_LAMBDA)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(0.0, 0.0))
                 .withZoom(0.003)
