@@ -130,6 +130,28 @@ public class Complex implements IComplex{
         return new Complex((a*c+b*d)/denominator,(b*c-a*d)/denominator);
     }
 
+    /**
+     * Raises this complex number to the given power, by multiplying it by itself
+     * {@code exponent} times.
+     *
+     * @param exponent The (non-negative) power to which this number is raised.
+     *
+     * @return The result of {@code this}<sup>{@code exponent}</sup>.
+     *
+     * @throws IllegalArgumentException If {@code exponent} is negative.
+     */
+    @Override
+    public IComplex pow(int exponent) {
+        if (exponent < 0) {
+            throw new IllegalArgumentException("The exponent must not be negative: " + exponent);
+        }
+
+        IComplex result = new Complex(1, 0);
+        for (int i = 0; i < exponent; i++) {
+            result = result.multiply(this);
+        }
+        return result;
+    }
 
     /**
      * Squares this complex number.
@@ -163,7 +185,7 @@ public class Complex implements IComplex{
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || !(obj instanceof IComplex)) return false;
+        if (!(obj instanceof IComplex)) return false;
         IComplex other = (IComplex) obj;
         return this.a == other.getRealPart() && this.b == other.getImaginaryPart();
     }

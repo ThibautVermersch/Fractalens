@@ -392,6 +392,11 @@ class FractalGeneratorTest {
         }
 
         @Override
+        public IComplex pow(int exponent) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
         public IComplex squared() {
             throw new UnsupportedOperationException();
         }
