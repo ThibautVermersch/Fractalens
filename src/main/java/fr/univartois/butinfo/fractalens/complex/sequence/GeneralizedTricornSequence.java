@@ -42,7 +42,7 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
     public IComplex computeNext(IComplex previous) {
         IComplex conjugate = previous.conjugate();
         IComplex power = conjugate;
-        for (int i = 0; i < degree; i++) {
+        for (int i = 1; i < degree; i++) {
             power = power.multiply(conjugate);
         }
         return power.add(c);
