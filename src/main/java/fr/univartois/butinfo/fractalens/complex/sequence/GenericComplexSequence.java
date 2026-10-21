@@ -33,5 +33,12 @@ public class GenericComplexSequence extends AbstractComplexSequence{
         return this.operator.apply(previous, getInitial());
     }
 
+    public static IComplexSequence createCubicLambdaSequence(IComplex z0, int maxIterations) {
+        return new GenericComplexSequence(
+                z0,
+                maxIterations,
+                (prev, init) -> prev.pow(3).add(prev.multiply(-1.0)).add(init)
+        );
+    }
 
 }
