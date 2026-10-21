@@ -67,7 +67,7 @@ public final class Fractalens {
         createFigure(new Complex(-0.4, 0.6), new Complex(0.1, 0.6), palette1, fileFig1);
 
         IColorStrategy gray = new GrayScaleStrategy(MAX_ITERATIONS);
-        IColorStrategy cyan = new ColorMaskStrategy(gray, false, true, true);
+        IColorStrategy cyan = new ColorMaskStrategy(gray, false, true, false);
         IColorStrategy invertedCyan = new InvertedColorStrategy(cyan);
         createFigure(new Complex(0.285, 0.01), new Complex(-0.47, -0.21), invertedCyan, fileFig2);
     }
@@ -98,13 +98,7 @@ public final class Fractalens {
 
         IFractalGenerator generator = new FractalGenerator(
                 (z0, max) -> new JuliaSequence(z0, c, max),
-                image,
-                plane,
-                MAX_ITERATIONS,
-                palette,
-                outputFile
-        );
-
+                image, plane, MAX_ITERATIONS, palette, outputFile);
 
         generator.generateImage();
         generator.saveImage();
