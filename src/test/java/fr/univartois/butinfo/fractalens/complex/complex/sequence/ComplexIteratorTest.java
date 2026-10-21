@@ -179,6 +179,11 @@ class ComplexIteratorTest {
             throw new UnsupportedOperationException();
         }
 
+        @Override
+        public IComplex pow(int exponent) {
+            throw new UnsupportedOperationException();
+        }
+
     }
 
     /**
