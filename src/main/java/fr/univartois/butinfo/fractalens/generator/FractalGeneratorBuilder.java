@@ -10,6 +10,7 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.TranslatedComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.ZoomComplexPlane;
+import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
 import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
@@ -102,13 +103,13 @@ public class FractalGeneratorBuilder {
     }
 
     /**
-     * Sets the sequence generator factory.
-     *
-     * @param factory Sequence functional factory.
-     * @return The builder instance.
+     *  Sets the sequence factory.
+     * @param type The sequence type
+     * @return The builder instance
      */
-    public FractalGeneratorBuilder withSequence(BiFunction<IComplex, Integer, IComplexSequence> factory) {
-        this.sequenceFactory = Objects.requireNonNull(factory, "Sequence factory cannot be null.");
+    public FractalGeneratorBuilder withSequence(ComplexSequenceType type) {
+        Objects.requireNonNull(type, "Sequence type cannot be null.");
+        this.sequenceFactory = type.getFactory();
         return this;
     }
 
