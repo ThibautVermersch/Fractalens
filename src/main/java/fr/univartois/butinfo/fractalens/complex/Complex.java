@@ -15,47 +15,99 @@ public class Complex implements IComplex{
         this.b = b;
     }
 
-
+    /**
+     * Gives the real part of this complex number.
+     *
+     * @return The real part of this complex number.
+     */
     @Override
     public double getRealPart() {
         return a;
     }
 
+    /**
+     * Gives the imaginary part of this complex number.
+     *
+     * @return The imaginary part of this complex number.
+     */
     @Override
     public double getImaginaryPart() {
         return b;
     }
 
+    /**
+     * Gives the modulus of this complex number.
+     *
+     * @return The modulus of this complex number.
+     */
     @Override
     public double abs() {
         return Math.sqrt(a*a+b*b);
     }
 
+    /**
+     * Gives the opposite of this complex number.
+     *
+     * @return The opposite of this complex number.
+     */
     @Override
     public IComplex negate() {
         return new Complex(-a,-b);
     }
 
+    /**
+     * Gives the conjugate of this complex number.
+     *
+     * @return The conjugate of this complex number.
+     */
     @Override
     public IComplex conjugate() {
         return new Complex(a,-b);
     }
 
+    /**
+     * Adds this complex number to an other one.
+     *
+     * @param other The complex number to add to this one.
+     *
+     * @return The result of {@code this + other}.
+     */
     @Override
     public IComplex add(IComplex other) {
         return new Complex(a+other.getRealPart(),b+ other.getImaginaryPart());
     }
 
+    /**
+     * Subtracts a complex number from this one.
+     *
+     * @param other The complex number to subtract from this one.
+     *
+     * @return The result of {@code this - other}.
+     */
     @Override
     public IComplex subtract(IComplex other) {
         return new Complex(a-other.getRealPart(),b-other.getImaginaryPart());
     }
 
+    /**
+     * Multiplies this complex number by a real value.
+     *
+     * @param value The value by which to multiply this number.
+     *
+     * @return The result of {@code this * value}.
+     */
     @Override
     public IComplex multiply(double value) {
         return new Complex(value*a,value*b);
     }
 
+    /**
+     * Multiplies this complex number by an other one.
+     *
+     * @param other The complex number to multiply this one with.
+     *
+     * @return The result of {@code this * other}.
+     */
     @Override
     public IComplex multiply(IComplex other) {
         double c = other.getRealPart();
@@ -63,11 +115,13 @@ public class Complex implements IComplex{
         return new Complex(a*c-b*d,a*d+b*c);
     }
 
-    @Override
-    public String toString() {
-        return a+" + "+b+"i";
-    }
-
+    /**
+     * Divides this complex number by an other one.
+     *
+     * @param other The complex number to divide this one by.
+     *
+     * @return The result of {@code this / other}.
+     */
     @Override
     public IComplex divide(IComplex other) {
         double c = other.getRealPart();
@@ -76,6 +130,37 @@ public class Complex implements IComplex{
         return new Complex((a*c+b*d)/denominator,(b*c-a*d)/denominator);
     }
 
+
+    /**
+     * Squares this complex number.
+     *
+     * @return This complex number squared.
+     */
+
+    public IComplex squared(){
+        return new Complex(a*a - b*b,2*a*b);
+    }
+
+
+    /**
+     * Returns a string representation of this complex number in algebraic form (a + bi).
+     *
+     * @return The algebraic string representation of this complex number.
+     */
+    @Override
+    public String toString() {
+        return a+" + "+b+"i";
+    }
+
+
+    /**
+     * Compares this complex number to the specified object for equality.
+     * The result is true if and only if the argument is not null and is an
+     * {@code IComplex} object with the same real and imaginary parts.
+     *
+     * @param obj The object to compare with.
+     * @return {@code true} if the objects are equal; {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -84,6 +169,12 @@ public class Complex implements IComplex{
         return this.a == other.getRealPart() && this.b == other.getImaginaryPart();
     }
 
+    /**
+     * Returns a hash code value for this complex number, based on its
+     * real and imaginary parts.
+     *
+     * @return A hash code value for this object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(a, b);
