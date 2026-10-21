@@ -24,10 +24,10 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
      */
     public GeneralizedTricornSequence(IComplex initial, IComplex c, int maxIterations,
             int degree) {
-        super(initial, maxIterations);
         if (degree < MIN_DEGREES) {
             throw new IllegalArgumentException("The degree must be at least " + MIN_DEGREES + ": " + degree);
         }
+        super(initial, maxIterations);
         this.c = c;
         this.degree = degree;
     }
