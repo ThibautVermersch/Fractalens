@@ -1,33 +1,44 @@
 package fr.univartois.butinfo.fractalens.generator;
 
-import java.awt.*;
+import java.awt.Color;
 
-public class FixedColorStrategy implements IColorStrategy{
+public class FixedColorStrategy implements IColorStrategy {
 
-    private int maxIterations;
+    private final int maxIterations;
+    private final ColorPalette palette;
+    private final Color[] customColors;
 
     public FixedColorStrategy(int maxIterations) {
-        this.maxIterations = maxIterations;
+        this(maxIterations, ColorPalette.CYBER);
     }
 
-    static private Color[] rainbow = {
-            new Color(200, 0, 0),
-            new Color(200, 100, 0),
-            new Color(200, 150, 0),
-            new Color(200, 200, 0),
-            new Color(100, 200, 0),
-            new Color(0, 180, 0),
-            new Color(0, 180, 180),
-            new Color(0, 140, 200),
-            new Color(0, 80, 200),
-            new Color(0, 0, 200)
-    };
+    public FixedColorStrategy(int maxIterations, ColorPalette palette) {
+        this.maxIterations = maxIterations;
+        this.palette = palette;
+        this.customColors = null;
+    }
+
+    public FixedColorStrategy(int maxIterations, Color[] customColors) {
+        this.maxIterations = maxIterations;
+        this.palette = null;
+        this.customColors = customColors;
+    }
 
     @Override
     public Color getColor(int iterations) {
         if (iterations >= maxIterations) {
             return Color.BLACK;
         }
-        return rainbow[(int)((iterations/(float)maxIterations)* rainbow.length)];
+
+        if (palette != null) {
+            return palette.getColor(iterations, maxIterations);
+        }
+
+        if (customColors != null && customColors.length > 0) {
+            int index = (int) Math.min(customColors.length - 1, (double) iterations / maxIterations * customColors.length);
+            return customColors[index];
+        }
+
+        return Color.BLACK;
     }
 }
