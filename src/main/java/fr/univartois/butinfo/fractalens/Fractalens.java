@@ -1,19 +1,13 @@
 package fr.univartois.butinfo.fractalens;
 
-import java.awt.Color;
-
 import fr.univartois.butinfo.fractalens.complex.Complex;
-import fr.univartois.butinfo.fractalens.complex.IComplex;
-import fr.univartois.butinfo.fractalens.complex.sequence.BurningShipSequence;
-import fr.univartois.butinfo.fractalens.complex.sequence.GenericComplexSequence;
-import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
+import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
+import fr.univartois.butinfo.fractalens.generator.ColorStrategyType;
 import fr.univartois.butinfo.fractalens.generator.FractalGeneratorBuilder;
-import fr.univartois.butinfo.fractalens.generator.GradientColorStrategy;
 import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
-import fr.univartois.butinfo.fractalens.generator.InvertedColorStrategy;
 
 /**
- * Luncher class for the fractalens application.
+ * Launcher class for the fractalens application.
  */
 public final class Fractalens {
 
@@ -21,11 +15,12 @@ public final class Fractalens {
      * Private constructor to prevent instantiation.
      */
     private Fractalens() {
-
+        // Utility class
     }
 
     /**
-     * Luncher method.
+     * Launcher method.
+     *
      * @param args The arguments of the program.
      */
     public static void main(String[] args) {
@@ -36,79 +31,69 @@ public final class Fractalens {
         String fileFig5 = (args.length > 4) ? args[4] : "tricorn.png";
         String fileFigLambda = (args.length > 5) ? args[5] : "lambda.png";
 
-        // Figure 1 : Julia, c = -0.4 + 0.6i
-        IComplex c1 = new Complex(-0.4, 0.6);
+        // Figure 1 : Julia (-0.4 + 0.6i) avec dégradé chaud
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new JuliaSequence(z0, c1, max))
+                .withSequence(ComplexSequenceType.JULIA)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(0.1, 0.6))
                 .withZoom(0.001)
                 .withMaxIterations(250)
-                .withColorStrategyFactory(max -> new GradientColorStrategy(max, Color.YELLOW, Color.RED))
+                .withColorStrategy(ColorStrategyType.SUNSET)
                 .withOutputFile(fileFig1)
                 .build());
 
-        // Figure 2 : Julia, c = 0.285 + 0.01i
-        IComplex c2 = new Complex(0.285, 0.01);
+        // Figure 2 : Julia spiral (0.285 + 0.01i) avec palette glacée
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new JuliaSequence(z0, c2, max))
+                .withSequence(ComplexSequenceType.JULIA_SPIRAL)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(-0.47, -0.21))
                 .withZoom(0.001)
                 .withMaxIterations(250)
-                .withColorStrategyFactory(max -> new InvertedColorStrategy(
-                        new GradientColorStrategy(max, Color.WHITE, new Color(30, 144, 255))))
+                .withColorStrategy(ColorStrategyType.ICE)
                 .withOutputFile(fileFig2)
                 .build());
 
-        // Figure 3 : Burning Ship
+        // Figure 3 : Burning Ship avec palette feu
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new BurningShipSequence(z0, max))
+                .withSequence(ComplexSequenceType.BURNING_SHIP)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(-1.755, -0.03))
                 .withZoom(0.0001)
                 .withMaxIterations(64)
-                .withColorStrategyFactory(max -> new InvertedColorStrategy(
-                        new GradientColorStrategy(max, Color.WHITE, new Color(0, 50, 200))))
+                .withColorStrategy(ColorStrategyType.FIRE)
                 .withOutputFile(fileFig3)
                 .build());
 
-        // Figure 4 : Mandelbrot
+        // Figure 4 : Mandelbrot avec dégradé bleu/jaune
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new GenericComplexSequence(z0, max,
-                        (prev, init) -> prev.multiply(prev).add(init)))
+                .withSequence(ComplexSequenceType.MANDELBROT)
                 .withDimensions(800, 600)
                 .withCenter(new Complex(-0.75, 0.0))
                 .withZoom(0.003)
                 .withMaxIterations(250)
-                .withColorStrategyFactory(max -> new InvertedColorStrategy(
-                        new GradientColorStrategy(max, Color.WHITE, new Color(230, 20, 120))))
+                .withColorStrategy(ColorStrategyType.GRADIENT_BLUE_YELLOW)
                 .withOutputFile(fileFig4)
                 .build());
 
-        // Figure 5 : Tricorn
+        // Figure 5 : Tricorn avec palette cyber inversée
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new GenericComplexSequence(z0, max, (prev, init) -> {
-                    IComplex conj = new Complex(prev.getRealPart(), -prev.getImaginaryPart());
-                    return conj.multiply(conj).add(init);
-                }))
+                .withSequence(ComplexSequenceType.TRICORN)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(-0.1, 0.0))
                 .withZoom(0.004)
                 .withMaxIterations(250)
-                .withColorStrategyFactory(max -> new GradientColorStrategy(max, Color.BLACK, new Color(0, 230, 140)))
+                .withColorStrategy(ColorStrategyType.INVERTED_CYBER)
                 .withOutputFile(fileFig5)
                 .build());
 
-        // Figure 6 : suite definie par une expression lambda, z^3 - z + z0
+        // Figure 6 : Suite cubique lambda avec palette néon
         generate(new FractalGeneratorBuilder()
-                .withSequence((z0, max) -> new GenericComplexSequence(z0, max,
-                        (prev, init) -> prev.pow(3).add(prev.multiply(-1.0)).add(init)))
+                .withSequence(ComplexSequenceType.CUBIC_LAMBDA)
                 .withDimensions(800, 800)
                 .withCenter(new Complex(0.0, 0.0))
                 .withZoom(0.003)
                 .withMaxIterations(100)
-                .withColorStrategyFactory(max -> new GradientColorStrategy(max, new Color(15, 15, 30), new Color(255, 140, 20)))
+                .withColorStrategy(ColorStrategyType.NEON)
                 .withOutputFile(fileFigLambda)
                 .build());
     }
