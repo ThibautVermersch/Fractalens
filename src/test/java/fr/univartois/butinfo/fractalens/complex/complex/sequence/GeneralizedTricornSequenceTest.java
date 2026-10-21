@@ -67,7 +67,7 @@ class GeneralizedTricornSequenceTest {
     }
 
     /**
-     * Test method for testsComputeNext with a degree of two.
+     * Test method for testsComputeNext with a degree of two
      */
     @Test
     void testComputeNextWithDegreeTwoIsTricorn() {

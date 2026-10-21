@@ -22,7 +22,7 @@ class TricornSequenceTest {
     }
 
     /**
-     * Creates a new sequence implementing Tricorn's sequence.
+     * Creates a new sequence implementing Tricorn's sequence
      * @param first
      * @param constant
      * @param nbTerms
