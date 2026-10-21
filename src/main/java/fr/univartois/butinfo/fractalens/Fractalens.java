@@ -3,23 +3,14 @@ package fr.univartois.butinfo.fractalens;
 import java.awt.Color;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
-import fr.univartois.butinfo.fractalens.complex.ComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
-import fr.univartois.butinfo.fractalens.complex.IComplexPlane;
-import fr.univartois.butinfo.fractalens.complex.TranslatedComplexPlane;
-import fr.univartois.butinfo.fractalens.complex.ZoomComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.sequence.BurningShipSequence;
 import fr.univartois.butinfo.fractalens.complex.sequence.GenericComplexSequence;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
-import fr.univartois.butinfo.fractalens.generator.ColorMaskStrategy;
-import fr.univartois.butinfo.fractalens.generator.FractalGenerator;
+import fr.univartois.butinfo.fractalens.generator.FractalGeneratorBuilder;
 import fr.univartois.butinfo.fractalens.generator.GradientColorStrategy;
-import fr.univartois.butinfo.fractalens.generator.GrayScaleStrategy;
-import fr.univartois.butinfo.fractalens.generator.IColorStrategy;
 import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
 import fr.univartois.butinfo.fractalens.generator.InvertedColorStrategy;
-import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
-import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 /**
  * Luncher class for the fractalens application.
@@ -44,175 +35,90 @@ public final class Fractalens {
         String fileFig4 = (args.length > 3) ? args[3] : "mandelbrot.png";
         String fileFig5 = (args.length > 4) ? args[4] : "tricorn.png";
         String fileFigLambda = (args.length > 5) ? args[5] : "lambda.png";
-        // Figur 1
-        IColorStrategy palette1 = new GradientColorStrategy(250, Color.YELLOW, Color.RED);
-        createJuliaFigure(800, 800, new Complex(-0.4, 0.6), new Complex(0.1, 0.6), 0.001, 250, palette1, fileFig1);
 
-        // Figur 2
-        IColorStrategy baseGradient = new GradientColorStrategy(250, Color.WHITE, new Color(30, 144, 255));
-        IColorStrategy invertedColor = new InvertedColorStrategy(baseGradient);
-        createJuliaFigure(800, 800, new Complex(0.285, 0.01), new Complex(-0.47, -0.21), 0.001, 250, invertedColor, fileFig2);
+        // Figure 1 : Julia, c = -0.4 + 0.6i
+        IComplex c1 = new Complex(-0.4, 0.6);
+        generate(new FractalGeneratorBuilder()
+                .withSequence((z0, max) -> new JuliaSequence(z0, c1, max))
+                .withDimensions(800, 800)
+                .withCenter(new Complex(0.1, 0.6))
+                .withZoom(0.001)
+                .withMaxIterations(250)
+                .withColorStrategyFactory(max -> new GradientColorStrategy(max, Color.YELLOW, Color.RED))
+                .withOutputFile(fileFig1)
+                .build());
 
+        // Figure 2 : Julia, c = 0.285 + 0.01i
+        IComplex c2 = new Complex(0.285, 0.01);
+        generate(new FractalGeneratorBuilder()
+                .withSequence((z0, max) -> new JuliaSequence(z0, c2, max))
+                .withDimensions(800, 800)
+                .withCenter(new Complex(-0.47, -0.21))
+                .withZoom(0.001)
+                .withMaxIterations(250)
+                .withColorStrategyFactory(max -> new InvertedColorStrategy(
+                        new GradientColorStrategy(max, Color.WHITE, new Color(30, 144, 255))))
+                .withOutputFile(fileFig2)
+                .build());
 
-        IColorStrategy baseGradient2 = new GradientColorStrategy(250, Color.WHITE, new Color(0, 50, 200));
-        IColorStrategy burningFire = new InvertedColorStrategy(baseGradient2);
-        createBurningShipFigure(800, 800, new Complex(-1.755, -0.03), 0.0001, 64, burningFire, fileFig3);
+        // Figure 3 : Burning Ship
+        generate(new FractalGeneratorBuilder()
+                .withSequence((z0, max) -> new BurningShipSequence(z0, max))
+                .withDimensions(800, 800)
+                .withCenter(new Complex(-1.755, -0.03))
+                .withZoom(0.0001)
+                .withMaxIterations(64)
+                .withColorStrategyFactory(max -> new InvertedColorStrategy(
+                        new GradientColorStrategy(max, Color.WHITE, new Color(0, 50, 200))))
+                .withOutputFile(fileFig3)
+                .build());
 
+        // Figure 4 : Mandelbrot
+        generate(new FractalGeneratorBuilder()
+                .withSequence((z0, max) -> new GenericComplexSequence(z0, max,
+                        (prev, init) -> prev.multiply(prev).add(init)))
+                .withDimensions(800, 600)
+                .withCenter(new Complex(-0.75, 0.0))
+                .withZoom(0.003)
+                .withMaxIterations(250)
+                .withColorStrategyFactory(max -> new InvertedColorStrategy(
+                        new GradientColorStrategy(max, Color.WHITE, new Color(230, 20, 120))))
+                .withOutputFile(fileFig4)
+                .build());
 
-        IColorStrategy baseMandel = new GradientColorStrategy(250, Color.WHITE, new Color(230, 20, 120));
-        IColorStrategy emeraldMandelbrot = new InvertedColorStrategy(baseMandel);
-        createMandelbrotFigure(800, 600, new Complex(-0.75, 0.0), 0.003, 250, emeraldMandelbrot, fileFig4);
-
-        IColorStrategy paletteTricorn = new GradientColorStrategy(250, Color.BLACK, new Color(0, 230, 140));
-        createTricornFigure(800, 800,new Complex(-0.1, 0.0),0.004,250,paletteTricorn,fileFig5);
-
-        IColorStrategy paletteLambda = new GradientColorStrategy(100, new Color(15, 15, 30), new Color(255, 140, 20));
-        createLambdaFigure(
-                800, 800,
-                new Complex(0.0, 0.0),
-                0.003,
-                100,
-                paletteLambda,
-                fileFigLambda
-        );
-    }
-
-    /**
-     * Create a complex plane with a zoom and a center.
-     * @param width The width of the plane.
-     * @param height The height of the plane.
-     * @param center The center of the plane.
-     * @param zoom The zoom factor of the plane.
-     * @return
-     */
-    private static IComplexPlane createConfiguredPlane(int width, int height, IComplex center, double zoom) {
-        IComplexPlane base = new ComplexPlane(height, width);
-        IComplexPlane zoomed = new ZoomComplexPlane(base, zoom);
-        return new TranslatedComplexPlane(zoomed, center);
-    }
-
-    /**
-     * Generate a Julia fractal.
-     * @param width The width of the image.
-     * @param height The height of the image.
-     * @param c The constant of the Julia set.
-     * @param center The center of the plane.
-     * @param zoom The zoom factor of the plane.
-     * @param maxIterations The maximum number of iterations.
-     * @param palette The color palette.
-     * @param outputFile The output file.
-     */
-    private static void createJuliaFigure(int width, int height, IComplex c, IComplex center, double zoom, int maxIterations, IColorStrategy palette, String outputFile) {
-        IComplexPlane plane = createConfiguredPlane(width, height, center, zoom);
-        IFractalImage image = new BufferedImageAdaptater(width, height);
-
-        IFractalGenerator generator = new FractalGenerator(
-                (z0, max) -> new JuliaSequence(z0, c, max),
-                image, plane, maxIterations, palette, outputFile);
-
-        generator.generateImage();
-        generator.saveImage();
-    }
-
-    /**
-     * Create a burning ship fractal.
-     * @param width The width of the image.
-     * @param height The height of the image.
-     * @param center The center of the plane.
-     * @param zoom The zoom factor of the plane.
-     * @param maxIterations The maximum number of iterations.
-     * @param palette The color palette.
-     * @param outputFile The output file.
-     */
-    private static void createBurningShipFigure(int width, int height, IComplex center, double zoom, int maxIterations, IColorStrategy palette, String outputFile) {
-        IComplexPlane plane = createConfiguredPlane(width, height, center, zoom);
-        IFractalImage image = new BufferedImageAdaptater(width, height);
-
-        IFractalGenerator generator = new FractalGenerator(
-                (z0, max) -> new BurningShipSequence(z0, max),
-                image, plane, maxIterations, palette, outputFile);
-
-        generator.generateImage();
-        generator.saveImage();
-    }
-
-    /**
-     * Create a Mandelbrot fractal.
-     * @param width The width of the image.
-     * @param height The height of the image.
-     * @param center The center of the plane.
-     * @param zoom The zoom factor of the plane.
-     * @param maxIterations The maximum number of iterations.
-     * @param palette The color palette.
-     * @param outputFile The output file.
-     */
-    private static void createMandelbrotFigure(int width, int height, IComplex center, double zoom, int maxIterations, IColorStrategy palette, String outputFile) {
-        IComplexPlane plane = createConfiguredPlane(width, height, center, zoom);
-        IFractalImage image = new BufferedImageAdaptater(width, height);
-
-        IFractalGenerator generator = new FractalGenerator(
-                (z0, max) -> new GenericComplexSequence(z0, max, (prev, init) -> prev.multiply(prev).add(init)),
-                image, plane, maxIterations, palette, outputFile);
-
-        generator.generateImage();
-        generator.saveImage();
-    }
-
-    /**
-     * Create a tricorn fractal.
-     * @param width The width of the image.
-     * @param height The height of the image.
-     * @param center The center of the plane.
-     * @param zoom The zoom factor of the plane.
-     * @param maxIterations The maximum number of iterations.
-     * @param palette The color palette.
-     * @param outputFile The output file.
-     */
-    private static void createTricornFigure(
-            int width,
-            int height,
-            IComplex center,
-            double zoom,
-            int maxIterations,
-            IColorStrategy palette,
-            String outputFile) {
-
-        IComplexPlane plane = createConfiguredPlane(width, height, center, zoom);
-        IFractalImage image = new BufferedImageAdaptater(width, height);
-
-        IFractalGenerator generator = new FractalGenerator(
-                (z0, max) -> new GenericComplexSequence(z0, max, (prev, init) -> {
+        // Figure 5 : Tricorn
+        generate(new FractalGeneratorBuilder()
+                .withSequence((z0, max) -> new GenericComplexSequence(z0, max, (prev, init) -> {
                     IComplex conj = new Complex(prev.getRealPart(), -prev.getImaginaryPart());
                     return conj.multiply(conj).add(init);
-                }),
-                image,
-                plane,
-                maxIterations,
-                palette,
-                outputFile);
+                }))
+                .withDimensions(800, 800)
+                .withCenter(new Complex(-0.1, 0.0))
+                .withZoom(0.004)
+                .withMaxIterations(250)
+                .withColorStrategyFactory(max -> new GradientColorStrategy(max, Color.BLACK, new Color(0, 230, 140)))
+                .withOutputFile(fileFig5)
+                .build());
 
-        generator.generateImage();
-        generator.saveImage();
+        // Figure 6 : suite definie par une expression lambda, z^3 - z + z0
+        generate(new FractalGeneratorBuilder()
+                .withSequence((z0, max) -> new GenericComplexSequence(z0, max,
+                        (prev, init) -> prev.pow(3).add(prev.multiply(-1.0)).add(init)))
+                .withDimensions(800, 800)
+                .withCenter(new Complex(0.0, 0.0))
+                .withZoom(0.003)
+                .withMaxIterations(100)
+                .withColorStrategyFactory(max -> new GradientColorStrategy(max, new Color(15, 15, 30), new Color(255, 140, 20)))
+                .withOutputFile(fileFigLambda)
+                .build());
     }
 
-    private static void createLambdaFigure(
-            int width, int height, IComplex center, double zoom,int maxIterations, IColorStrategy palette, String outputFile) {
-        IComplexPlane plane = createConfiguredPlane(width, height, center, zoom);
-        IFractalImage image = new BufferedImageAdaptater(width, height);
-
-        IFractalGenerator generator = new FractalGenerator(
-                (z0, max) -> new GenericComplexSequence(
-                        z0,
-                        max,
-                        (prev, init) -> prev.pow(3).add(prev.multiply(-1.0)).add(init)
-                ),
-                image,
-                plane,
-                maxIterations,
-                palette,
-                outputFile
-        );
-
+    /**
+     * Generates the image of the given generator and saves it in its output file.
+     *
+     * @param generator The generator built with the {@link FractalGeneratorBuilder}.
+     */
+    private static void generate(IFractalGenerator generator) {
         generator.generateImage();
         generator.saveImage();
     }
