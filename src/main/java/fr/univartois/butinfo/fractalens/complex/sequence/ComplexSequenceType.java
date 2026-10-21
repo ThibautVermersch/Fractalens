@@ -73,14 +73,4 @@ public enum ComplexSequenceType {
         return factory;
     }
 
-    /**
-     * Creates a new sequence.
-     * @param initial The first term of the sequence.
-     * @param maxIterations The maximum number of iterations to compute.
-     * @return The created sequence.
-     */
-    public IComplexSequence create(IComplex initial, int maxIterations) {
-        Objects.requireNonNull(initial, "The first term cannot be null");
-        return factory.apply(initial, maxIterations);
-    }
 }
