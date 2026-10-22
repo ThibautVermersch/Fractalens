@@ -1,9 +1,11 @@
 package fr.univartois.butinfo.fractalens.generator;
 
+import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -25,17 +27,17 @@ public class RotationAnimation {
      * @return The rotated complex number.
      */
     public static IComplex rotate(IComplex c, double theta) {
-        return null;
+        Objects.requireNonNull(c,"'c' cannot be null");
+        return c.multiply(new Complex(Math.cos(theta), Math.sin(theta)));
     }
 
     /**
      *  Generates all the frames of the animation.
      * @param c The complex number to rotate.
      * @param frames The number of frames to generate.
-     * @param delay The delay between frames, in milliseconds.
      * @return A list of images representing the animation frames.
      */
-    public static List<BufferedImage> generateFrames(IComplex c, int frames, int delay) {
+    public static List<BufferedImage> generateFrames(IComplex c, int frames) {
         return null;
     }
 
@@ -43,8 +45,9 @@ public class RotationAnimation {
      * Saves the frames as a GIF file.
      * @param frames The list of frames to save.
      * @param path The path where to save the GIF file.
+     * @param delay The delay between frames, in milliseconds.
      */
-    public static void safeAsGif(List<BufferedImage> frames, String path) {
+    public static void safeAsGif(List<BufferedImage> frames, String path, int delay) {
 
     }
 }
