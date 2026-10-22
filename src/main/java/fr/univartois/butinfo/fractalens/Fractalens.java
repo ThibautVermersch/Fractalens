@@ -31,6 +31,7 @@ public final class Fractalens {
         String fileFig5 = (args.length > 4) ? args[4] : "tricorn.png";
         String fileFigLambda = (args.length > 5) ? args[5] : "lambda.png";
         String fileZoomGif = (args.length > 6) ? args[6] : "mandelbrot-zoom.gif";
+        String fileRotationGif = (args.length > 7) ? args[7] : "julia-rotation.gif";
 
         // Figure 1 : Julia (-0.4 + 0.6i) avec dégradé chaud
         generate(new FractalGeneratorBuilder()
@@ -110,8 +111,16 @@ public final class Fractalens {
                 .withOutputFile(fileZoomGif)
                 .buildZoomAnimation(60, 0.9, 80));
 
-        // Animation 2 : rotation de la constante c de Julia (c = 0.7885 + 0i, centrée en 0)
-        // TODO (#34) : à ajouter quand la rotation sera mergée dans dev
+        // Animation 2 : Julia centrée en 0, rotation de la constante c = 0.7885 + 0i
+        // (60 images pour un tour complet, 80 ms entre deux images)
+        generate(new FractalGeneratorBuilder()
+                .withDimensions(400, 400)
+                .withCenter(new Complex(0.0, 0.0))
+                .withZoom(3.2 / 400)
+                .withMaxIterations(250)
+                .withColorStrategy(ColorStrategyType.ICE)
+                .withOutputFile(fileRotationGif)
+                .buildJuliaRotationAnimation(60, new Complex(0.7885, 0.0), 80));
     }
 
     /**
