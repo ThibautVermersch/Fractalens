@@ -1,15 +1,40 @@
 package fr.univartois.butinfo.fractalens.complex.generator;
 
-import fr.univartois.butinfo.fractalens.complex.Complex;
-import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.io.File;
+
+import fr.univartois.butinfo.fractalens.generator.AnimatedFractalGenerator;
 import fr.univartois.butinfo.fractalens.generator.ColorStrategyType;
 import fr.univartois.butinfo.fractalens.generator.FractalGeneratorBuilder;
 import fr.univartois.butinfo.fractalens.generator.IFractalGenerator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import fr.univartois.butinfo.fractalens.complex.Complex;
+import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
 
+/**
+ * Tests unitaires ciblant les animations construites par {@link FractalGeneratorBuilder}.
+ *
+ * @author Thibaut Vermersch
+ * @version 0.1.0
+ */
 class FractalGeneratorBuildTest {
+
+    private static final String TEST_GIF = "anim_test.gif";
+
+    @AfterEach
+    void tearDown() {
+        File file = new File(TEST_GIF);
+        if (file.exists()) {
+            file.delete();
+        }
+    }
+
     @Test
     void testBuildZoomAnimationSuccess() {
         FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
@@ -19,14 +44,14 @@ class FractalGeneratorBuildTest {
                 .withMaxIterations(50)
                 .withSequence(ComplexSequenceType.MANDELBROT)
                 .withColorStrategy(ColorStrategyType.GRAYSCALE)
-                .withOutputFile("anim_test.gif");
+                .withOutputFile(TEST_GIF);
 
         IFractalGenerator generator = builder.buildZoomAnimation(5, 0.8, 100);
 
         assertNotNull(generator);
-        if (generator instanceof AnimatedFractalGenerator animated) {
-            assertEquals(5, animated.getGenerators().size());
-        }
+        AnimatedFractalGenerator animated = assertInstanceOf(
+                AnimatedFractalGenerator.class, generator);
+        assertEquals(5, animated.getGenerators().size());
     }
 
     @Test
