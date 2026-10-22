@@ -14,6 +14,7 @@ import fr.univartois.butinfo.fractalens.complex.TranslatedComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.ZoomComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
 import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
+import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
@@ -226,5 +227,39 @@ public class FractalGeneratorBuilder {
         }
 
         return new AnimatedFractalGenerator(frameGenerators, this.outputFile, delay);
+    }
+
+    /**
+     * Create a rotated complex
+     * @param frameCount the number of frames
+     * @param initialC the initial complex number
+     * @param delayMs the delay between frames
+     * @return the animated fractal generator
+     */
+    public IFractalGenerator buildJuliaRotationAnimation(int frameCount, IComplex initialC, int delayMs) {
+        if (frameCount <= 0) {
+            throw new IllegalArgumentException("Le nombre d'images doit être strictement positif.");}
+        if (delayMs <= 0) {
+            throw new IllegalArgumentException("Le délai doit être strictement positif.");}
+        Objects.requireNonNull(initialC, "La constante complexe initiale ne peut être nulle.");
+
+        List<IFractalGenerator> frameGenerators = new ArrayList<>();
+        double step = (2.0 * Math.PI) / frameCount;
+
+        for (int i = 0; i < frameCount; i++) {
+            double theta = i * step;
+            double cos = Math.cos(theta);
+            double sin = Math.sin(theta);
+
+            double re = initialC.getRealPart() * cos - initialC.getImaginaryPart() * sin;
+            double im = initialC.getRealPart() * sin + initialC.getImaginaryPart() * cos;
+            IComplex rotatedC = new Complex(re, im);
+
+            // Configure la séquence Julia avec la constante tournée
+            this.withSequence((z0, max) -> new JuliaSequence(z0, rotatedC, max));
+            frameGenerators.add(this.build());
+        }
+
+        return new AnimatedFractalGenerator(frameGenerators, this.outputFile, delayMs);
     }
 }
