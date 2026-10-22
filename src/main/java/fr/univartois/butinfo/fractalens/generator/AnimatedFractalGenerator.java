@@ -2,10 +2,12 @@ package fr.univartois.butinfo.fractalens.generator;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
-import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 
@@ -22,6 +24,11 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
     private final String outputPath;
 
     /**
+     * Images générées par les sous-générateurs.
+     */
+    private final List<IFractalImage> frames;
+
+    /**
      * The delay between each frame in milliseconds.
      */
     private final int delayMs;
@@ -34,9 +41,17 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
      * @param delayMs    The delay between frames in milliseconds.
      */
     public AnimatedFractalGenerator(List<IFractalGenerator> generators, String outputPath, int delayMs) {
-        this.generators = generators;
-        this.outputPath = outputPath;
+        this.generators = new ArrayList<>(Objects.requireNonNull(generators, "Generators list cannot be null."));
+        this.outputPath = Objects.requireNonNull(outputPath, "Output path cannot be null.");
+        if (delayMs <= 0) {
+            throw new IllegalArgumentException("Delay must be strictly positive.");
+        }
         this.delayMs = delayMs;
+        this.frames = new ArrayList<>();
+    }
+
+    public List<IFractalGenerator> getGenerators() {
+        return Collections.unmodifiableList(this.generators);
     }
 
     /**
@@ -46,9 +61,11 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
      */
     @Override
     public IFractalImage generateImage() {
+        this.frames.clear();
         IFractalImage firstImage = null;
         for (IFractalGenerator generator : generators) {
             IFractalImage img = generator.generateImage();
+            this.frames.add(img);
             if (firstImage == null) {
                 firstImage = img;
             }
@@ -66,7 +83,7 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
     @Override
     public Color computePixelColor(int row, int column) {
         if (!generators.isEmpty()) {
-            return generators.get(0).computePixelColor(row, column);
+            return generators.getFirst().computePixelColor(row, column);
         }
         return Color.BLACK;
     }
@@ -76,18 +93,26 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
      */
     @Override
     public void saveImage() {
+        if (this.generators.isEmpty()) {
+            throw new IllegalStateException("Cannot save GIF without frames.");
+        }
+
+        if (this.frames.isEmpty()) {
+            generateImage();
+        }
+
         AnimatedGifEncoder encoder = new AnimatedGifEncoder();
         encoder.start(outputPath);
         encoder.setDelay(delayMs);
         encoder.setRepeat(0);
         encoder.setQuality(10);
 
-        for (IFractalGenerator generator : generators) {
-            IFractalImage fractalImage = generator.generateImage();
-
-            if (fractalImage instanceof BufferedImageAdaptater) {
-                BufferedImage bufferedImage = ((BufferedImageAdaptater) fractalImage).getBufferedImage();
-                encoder.addFrame(bufferedImage);
+        for (IFractalImage frame : this.frames) {
+            if (frame != null) {
+                BufferedImage buf = frame.asBufferedImage();
+                if (buf != null) {
+                    encoder.addFrame(buf);
+                }
             }
         }
 
