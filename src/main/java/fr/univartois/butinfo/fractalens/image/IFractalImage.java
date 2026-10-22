@@ -24,6 +24,7 @@
 package fr.univartois.butinfo.fractalens.image;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 /**
@@ -68,4 +69,11 @@ public interface IFractalImage {
      */
     void saveAs(String path) throws IOException;
 
+    /**
+     * Converts this image to a BufferedImage.
+     * @return The BufferedImage representation of this image.
+     */
+    default BufferedImage asBufferedImage(){
+        return null;
+    }
 }

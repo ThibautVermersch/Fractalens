@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
+import fr.univartois.butinfo.fractalens.image.IFractalImage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -97,5 +98,16 @@ public class BufferedImageAdapterTest {
         assertThrows(IOException.class, () -> {
             adaptater.saveAs(tempFile.getAbsolutePath());
         });
+    }
+
+    /**
+     * Test that the adapted image can be converted to a BufferedImage.
+     */
+    @Test
+    void testAsBufferedImageReturnsNonNull() {
+        IFractalImage img = new BufferedImageAdaptater(100, 100);
+        assertNotNull(img.asBufferedImage());
+        assertEquals(100, img.asBufferedImage().getWidth());
+        assertEquals(100, img.asBufferedImage().getHeight());
     }
 }

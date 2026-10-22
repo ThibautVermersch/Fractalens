@@ -111,4 +111,12 @@ public class FractalGenerator implements IFractalGenerator{
             throw new UncheckedIOException("Failed to save fractal image to " + path, e);
         }
     }
+
+    /**
+     * Getter for the image.
+     * @return The image.
+     */
+    public IFractalImage getImage() {
+        return this.image;
+    }
 }

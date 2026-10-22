@@ -1,5 +1,7 @@
 package fr.univartois.butinfo.fractalens.generator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
@@ -12,6 +14,7 @@ import fr.univartois.butinfo.fractalens.complex.TranslatedComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.ZoomComplexPlane;
 import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
 import fr.univartois.butinfo.fractalens.complex.sequence.IComplexSequence;
+import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
@@ -192,5 +195,70 @@ public class FractalGeneratorBuilder {
                 colorStrategy,
                 this.outputFile
         );
+    }
+
+    /**
+     * Builds an animated fractal generator.
+     * @param frame the number of frames
+     * @param zoomFactor the zoom factor
+     * @param delay the delay between frames
+     * @return the animated fractal generator
+     */
+    public IFractalGenerator buildZoomAnimation(int frame, double zoomFactor, int delay){
+        if (frame <= 0) {
+            throw new IllegalArgumentException("the number of frames must be positive.");
+        }
+        if (zoomFactor <= 0.0 || zoomFactor >= 1.0) {
+            throw new IllegalArgumentException("the zoom factor must be between 0.0 and 1.0.");
+        }
+        if (delay <= 0) {
+            throw new IllegalArgumentException("the delay must be positive.");
+        }
+        if (this.zoom == null) {
+            throw new IllegalStateException("the initial zoom must be defined before building.");
+        }
+        List<IFractalGenerator> frameGenerators = new ArrayList<>();
+        double currentZoom = this.zoom;
+
+        for (int i = 0; i < frame; i++) {
+            this.zoom = currentZoom;
+            frameGenerators.add(this.build());
+            currentZoom *= zoomFactor;
+        }
+
+        return new AnimatedFractalGenerator(frameGenerators, this.outputFile, delay);
+    }
+
+    /**
+     * Create a rotated complex
+     * @param frameCount the number of frames
+     * @param initialC the initial complex number
+     * @param delayMs the delay between frames
+     * @return the animated fractal generator
+     */
+    public IFractalGenerator buildJuliaRotationAnimation(int frameCount, IComplex initialC, int delayMs) {
+        if (frameCount <= 0) {
+            throw new IllegalArgumentException("The Number of frames must be strictly positive.");}
+        if (delayMs <= 0) {
+            throw new IllegalArgumentException("The delay must be strictly positive.");}
+        Objects.requireNonNull(initialC, "The initial complex number cannot be null.");
+
+        List<IFractalGenerator> frameGenerators = new ArrayList<>();
+        double step = (2.0 * Math.PI) / frameCount;
+
+        for (int i = 0; i < frameCount; i++) {
+            double theta = i * step;
+            double cos = Math.cos(theta);
+            double sin = Math.sin(theta);
+
+            double re = initialC.getRealPart() * cos - initialC.getImaginaryPart() * sin;
+            double im = initialC.getRealPart() * sin + initialC.getImaginaryPart() * cos;
+            IComplex rotatedC = new Complex(re, im);
+
+            this.withSequence((z0, max) -> new JuliaSequence(z0, rotatedC, max));
+            frameGenerators.add(this.build());
+        }
+
+        return new AnimatedFractalGenerator(frameGenerators, this.outputFile, delayMs);
     }
 }
