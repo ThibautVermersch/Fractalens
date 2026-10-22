@@ -75,6 +75,12 @@ public class BufferedImageAdaptater implements IFractalImage{
         }
     }
 
+    @Override
+    public BufferedImage asBufferedImage() {
+
+        return this.image;
+    }
+
     /**
      * Returns the underlying BufferedImage
      * @return The underlying BufferedImage
