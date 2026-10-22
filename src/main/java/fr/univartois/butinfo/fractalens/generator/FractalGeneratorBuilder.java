@@ -238,10 +238,10 @@ public class FractalGeneratorBuilder {
      */
     public IFractalGenerator buildJuliaRotationAnimation(int frameCount, IComplex initialC, int delayMs) {
         if (frameCount <= 0) {
-            throw new IllegalArgumentException("Le nombre d'images doit être strictement positif.");}
+            throw new IllegalArgumentException("The Number of frames must be strictly positive.");}
         if (delayMs <= 0) {
-            throw new IllegalArgumentException("Le délai doit être strictement positif.");}
-        Objects.requireNonNull(initialC, "La constante complexe initiale ne peut être nulle.");
+            throw new IllegalArgumentException("The delay must be strictly positive.");}
+        Objects.requireNonNull(initialC, "The initial complex number cannot be null.");
 
         List<IFractalGenerator> frameGenerators = new ArrayList<>();
         double step = (2.0 * Math.PI) / frameCount;
@@ -255,7 +255,6 @@ public class FractalGeneratorBuilder {
             double im = initialC.getRealPart() * sin + initialC.getImaginaryPart() * cos;
             IComplex rotatedC = new Complex(re, im);
 
-            // Configure la séquence Julia avec la constante tournée
             this.withSequence((z0, max) -> new JuliaSequence(z0, rotatedC, max));
             frameGenerators.add(this.build());
         }
