@@ -407,31 +407,31 @@ Fractalens ..> IFractalGenerator : << runs >>
 
 ## Feature list
 
-| Features                                               | Design Pattern(s) (?)       | Author(s) |
-|--------------------------------------------------------|-----------------------------|-----------|
-| Complex number                                         |                             |           |
-| Default complex plane                                  |                             |           |
-| Scaled complex plane                                   |                             |           |
-| Translated complex plane                               |                             |           |
-| Sequence of complex numbers                            |                             |           |
-| Iterator over a sequence of complex numbers            |         Iterator                    |    Yeleen       |
-| Julia sequence                                         |                             |           |
-| Mandelbrot sequence                                    |                             |           |
-| Multijulia sequence                                    |                             |           |
-| Multibrot sequence                                     |                             |           |
-| Generic sequences                                      |                             |           |
-| Color palette                                          |                             |           |
-| Grey scale palette                                     |                             |           |
-| Red/Green/Blue/... scale palette                       |                             |           |
-| Inverted color palette                                 |                             |           |
-| Gradient-based color palette                           |    Strategy                       |     Yeleen      |
-| Predefined color palette                               |                             |           |
-| `BufferedImage` used as an `IFractalImage`             |                             |           |
-| Static image generation                                |                             |        Yeleen   |
-| Scale-based animated image generation                  |                             |           |
-| Rotation-based animated image generation               |                             |           |
-| Configuration of the fractal generator                 |                             |           |
-| Command-line interface                                 |                             |           |
+| Features                                               | Design Pattern(s) (?)      | Author(s)         |
+|--------------------------------------------------------|----------------------------|-------------------|
+| Complex number                                         |                            | Brichard Lucas    |
+| Default complex plane                                  | Decorator                  | Pispisa Mathéo    |
+| Scaled complex plane                                   | Decorator                  | Vermersch Thibaut |
+| Translated complex plane                               | Decorator                  | Vermersch Thibaut |
+| Sequence of complex numbers                            | Patron de méthode          | Vermersch Thibaut |
+| Iterator over a sequence of complex numbers            | Iterator                   | Cividino Yeleen   |
+| Julia sequence                                         |                            | Vermersch Thibaut |
+| Mandelbrot sequence                                    |                            | Cividino Yeleen   |
+| Multijulia sequence                                    |                            | Vermersch Thibaut |
+| Multibrot sequence                                     |                            | Cividino Yeleen   |
+| Generic sequences                                      | Strategy / Binary Operator | Vermersch Thibaut |
+| Color palette                                          | Strategy                   | Brichard Lucas    |
+| Grey scale palette                                     | Strategy                   | Brichard Lucas    |
+| Red/Green/Blue/... scale palette                       | Decorator                  | Pispisa Mathéo    |
+| Inverted color palette                                 | Decorator                  | Pispisa Mathéo    |
+| Gradient-based color palette                           | Strategy                   | Cividino Yeleen   |
+| Predefined color palette                               | Strategy / factory         | Brichard Lucas    |
+| `BufferedImage` used as an `IFractalImage`             | Adapter                    | Vermersch Thibaut |
+| Static image generation                                | Strategy                   | Cividino Yeleen   |
+| Scale-based animated image generation                  | Composite / Builder        | Brichard Lucas    |
+| Rotation-based animated image generation               | Composite / Builder        | Pispisa Mathéo    |
+| Configuration of the fractal generator                 | Builder / Factory          | Vermersch Thibaut |
+| Command-line interface                                 |                            | Cividino Yeleen   |
 
 ## Team
 
