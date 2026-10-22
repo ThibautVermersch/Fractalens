@@ -1,9 +1,7 @@
 package fr.univartois.butinfo.fractalens.complex.generator;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.awt.Color;
+import java.io.File;
 
 import fr.univartois.butinfo.fractalens.generator.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +12,8 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
 import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * Tests unitaires pour {@link FractalGeneratorBuilder}.
  *
@@ -23,6 +23,7 @@ import fr.univartois.butinfo.fractalens.complex.sequence.JuliaSequence;
 class FractalGeneratorBuilderTest {
 
     private FractalGeneratorBuilder builder;
+    private static final String ROT_GIF = "test_builder_rot.gif";
 
     @BeforeEach
     void setUp() {
@@ -125,4 +126,59 @@ class FractalGeneratorBuilderTest {
         assertThrows(NullPointerException.class, () -> this.builder.withColorStrategy((IColorStrategy) null));
         assertThrows(NullPointerException.class, () -> this.builder.withColorStrategyFactory(null));
     }
+
+    // --- TESTS ROTATION ANIMATION ---
+
+    @Test
+    void testBuildJuliaRotationAnimationSuccess() {
+        IComplex c0 = new Complex(0.7885, 0.0);
+
+        FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
+                .withDimensions(40, 40)
+                .withCenter(new Complex(0.0, 0.0))
+                .withZoom(0.005)
+                .withMaxIterations(20)
+                .withColorStrategy(ColorStrategyType.GRAYSCALE)
+                .withOutputFile(ROT_GIF);
+
+        IFractalGenerator generator = builder.buildJuliaRotationAnimation(6, c0, 60);
+
+        assertNotNull(generator);
+        AnimatedFractalGenerator animated = assertInstanceOf(AnimatedFractalGenerator.class, generator);
+        assertEquals(6, animated.getGenerators().size());
+
+        // Vérifie la création du fichier GIF
+        generator.generateImage();
+        generator.saveImage();
+
+        File file = new File(ROT_GIF);
+        assertTrue(file.exists());
+        assertTrue(file.length() > 0);
+    }
+
+    /**
+     *
+     */
+    @Test
+    void testBuildJuliaRotationAnimationInvalidParameters() {
+        FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
+                .withDimensions(40, 40)
+                .withCenter(new Complex(0.0, 0.0))
+                .withZoom(0.005)
+                .withColorStrategy(ColorStrategyType.GRAYSCALE);
+
+        IComplex c0 = new Complex(0.7885, 0.0);
+
+        // Frame count <= 0
+        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(0, c0, 50));
+        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(-2, c0, 50));
+
+        // Délai <= 0
+        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(6, c0, 0));
+        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(6, c0, -30));
+
+        // Constante c nulle
+        assertThrows(NullPointerException.class, () -> builder.buildJuliaRotationAnimation(6, null, 50));
+    }
+
 }
