@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
-import fr.univartois.butinfo.fractalens.image.BufferedImageAdaptater;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
 
