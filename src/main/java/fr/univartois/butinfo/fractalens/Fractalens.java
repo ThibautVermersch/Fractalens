@@ -30,6 +30,7 @@ public final class Fractalens {
         String fileFig4 = (args.length > 3) ? args[3] : "mandelbrot.png";
         String fileFig5 = (args.length > 4) ? args[4] : "tricorn.png";
         String fileFigLambda = (args.length > 5) ? args[5] : "lambda.png";
+        String fileZoomGif = (args.length > 6) ? args[6] : "mandelbrot-zoom.gif";
 
         // Figure 1 : Julia (-0.4 + 0.6i) avec dégradé chaud
         generate(new FractalGeneratorBuilder()
@@ -96,10 +97,26 @@ public final class Fractalens {
                 .withColorStrategy(ColorStrategyType.NEON)
                 .withOutputFile(fileFigLambda)
                 .build());
+
+        // Animation 1 : zoom sur Mandelbrot au point -0.743643887037151 + 0.131825904205330i
+        // (60 images, zoom multiplié par 0.9 à chaque image, 80 ms entre deux images)
+        generate(new FractalGeneratorBuilder()
+                .withSequence(ComplexSequenceType.MANDELBROT)
+                .withDimensions(400, 400)
+                .withCenter(new Complex(-0.743643887037151, 0.131825904205330))
+                .withZoom(3.0 / 400)
+                .withMaxIterations(500)
+                .withColorStrategy(ColorStrategyType.FIRE)
+                .withOutputFile(fileZoomGif)
+                .buildZoomAnimation(60, 0.9, 80));
+
+        // Animation 2 : rotation de la constante c de Julia (c = 0.7885 + 0i, centrée en 0)
+        // TODO (#34) : à ajouter quand la rotation sera mergée dans dev
     }
 
     /**
      * Generates the image of the given generator and saves it in its output file.
+     * This works both for a single image and for an animation.
      *
      * @param generator The generator built with the {@link FractalGeneratorBuilder}.
      */
