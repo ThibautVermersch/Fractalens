@@ -1,5 +1,7 @@
 package fr.univartois.butinfo.fractalens.generator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
@@ -214,18 +216,15 @@ public class FractalGeneratorBuilder {
         if (this.zoom == null) {
             throw new IllegalStateException("the initial zoom must be defined before building.");
         }
-        AnimatedFractalGenerator animatedGenerator = new AnimatedFractalGenerator(this.outputFile);
-        animatedGenerator.setDelay(delay);
-
-        double initialZoom = this.zoom;
-        double currentZoom = initialZoom;
+        List<IFractalGenerator> frameGenerators = new ArrayList<>();
+        double currentZoom = this.zoom;
 
         for (int i = 0; i < frame; i++) {
             this.zoom = currentZoom;
-            animatedGenerator.addGenerator(this.build());
+            frameGenerators.add(this.build());
             currentZoom *= zoomFactor;
         }
-        this.zoom=currentZoom;
-        return animatedGenerator;
+
+        return new AnimatedFractalGenerator(frameGenerators, this.outputFile, delay);
     }
 }
