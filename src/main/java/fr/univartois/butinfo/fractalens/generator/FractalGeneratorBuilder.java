@@ -1,5 +1,7 @@
 package fr.univartois.butinfo.fractalens.generator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.IntFunction;
@@ -192,5 +194,37 @@ public class FractalGeneratorBuilder {
                 colorStrategy,
                 this.outputFile
         );
+    }
+
+    /**
+     * Builds an animated fractal generator.
+     * @param frame the number of frames
+     * @param zoomFactor the zoom factor
+     * @param delay the delay between frames
+     * @return the animated fractal generator
+     */
+    public IFractalGenerator buildZoomAnimation(int frame, double zoomFactor, int delay){
+        if (frame <= 0) {
+            throw new IllegalArgumentException("the number of frames must be positive.");
+        }
+        if (zoomFactor <= 0.0 || zoomFactor >= 1.0) {
+            throw new IllegalArgumentException("the zoom factor must be between 0.0 and 1.0.");
+        }
+        if (delay <= 0) {
+            throw new IllegalArgumentException("the delay must be positive.");
+        }
+        if (this.zoom == null) {
+            throw new IllegalStateException("the initial zoom must be defined before building.");
+        }
+        List<IFractalGenerator> frameGenerators = new ArrayList<>();
+        double currentZoom = this.zoom;
+
+        for (int i = 0; i < frame; i++) {
+            this.zoom = currentZoom;
+            frameGenerators.add(this.build());
+            currentZoom *= zoomFactor;
+        }
+
+        return new AnimatedFractalGenerator(frameGenerators, this.outputFile, delay);
     }
 }
