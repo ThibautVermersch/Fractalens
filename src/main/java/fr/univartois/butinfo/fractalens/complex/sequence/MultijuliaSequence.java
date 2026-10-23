@@ -26,10 +26,10 @@ public class MultijuliaSequence extends AbstractComplexSequence {
      * @param maxIterations The maximum number of iterations to compute.
      */
     public MultijuliaSequence(IComplex initial, IComplex constant, int power, int maxIterations) {
+        super(initial, maxIterations);
         if (power < 1) {
             throw new IllegalArgumentException("Power must be at least 1: " + power);
         }
-        super(initial, maxIterations);
         this.constant = Objects.requireNonNull(constant, "Constant cannot be null");
         this.power = power;
     }
