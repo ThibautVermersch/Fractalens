@@ -33,6 +33,8 @@ dependencies {
     testImplementation libs.junit.jupiter
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'com.madgag:animated-gif-lib:1.4'
+    implementation 'info.picocli:picocli:4.7.6'
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.6'
 }
 
 // The configuration of JUnit Jupiter for unit tests.
