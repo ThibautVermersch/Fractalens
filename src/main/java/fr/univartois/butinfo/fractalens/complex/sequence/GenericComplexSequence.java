@@ -33,6 +33,12 @@ public class GenericComplexSequence extends AbstractComplexSequence{
         return this.operator.apply(previous, getInitial());
     }
 
+    /**
+     * Creates a sequence of the form z_n = z_{n-1}^3 + z_{n-1} - z_0.
+     * @param z0 The initial value of the sequence.
+     * @param maxIterations The maximum number of iterations to compute.
+     * @return The sequence of the form z_n = z_{n-1}^3 + z_{n-1} - z_0.
+     */
     public static IComplexSequence createCubicLambdaSequence(IComplex z0, int maxIterations) {
         return new GenericComplexSequence(
                 z0,

@@ -22,14 +22,27 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class FractalGeneratorBuilderTest {
 
+    /**
+     * The builder under test.
+     */
     private FractalGeneratorBuilder builder;
+
+    /**
+     * the path to the generated GIF file.
+     */
     private static final String ROT_GIF = "test_builder_rot.gif";
 
+    /**
+     * Set up the test.
+     */
     @BeforeEach
     void setUp() {
         this.builder = new FractalGeneratorBuilder();
     }
 
+    /**
+     * Test that the builder throws an exception if the required parameters are not set.
+     */
     @Test
     void testBuildWithoutZoomThrowsException() {
         this.builder.withSequence(ComplexSequenceType.MANDELBROT)
@@ -38,6 +51,9 @@ class FractalGeneratorBuilderTest {
         assertThrows(IllegalStateException.class, () -> this.builder.build());
     }
 
+    /**
+     * Test that the builder throws an exception if the required parameters are not set.
+     */
     @Test
     void testBuildWithoutSequenceThrowsException() {
         this.builder.withZoom(0.001)
@@ -46,6 +62,9 @@ class FractalGeneratorBuilderTest {
         assertThrows(IllegalStateException.class, () -> this.builder.build());
     }
 
+    /**
+     * Test that the builder throws an exception if the required parameters are not set.
+     */
     @Test
     void testBuildWithoutColorStrategyThrowsException() {
         this.builder.withZoom(0.001)
@@ -54,6 +73,9 @@ class FractalGeneratorBuilderTest {
         assertThrows(IllegalStateException.class, () -> this.builder.build());
     }
 
+    /**
+     * Test that the builder throws an exception if the required parameters are not set.
+     */
     @Test
     void testSuccessfulBuildWithEnums() {
         IFractalGenerator generator = this.builder
@@ -69,6 +91,9 @@ class FractalGeneratorBuilderTest {
         assertNotNull(generator);
     }
 
+    /**
+     * Test that the builder throws an exception if the required parameters are not set.
+     */
     @Test
     void testSuccessfulBuildWithRawObjects() {
         int max = 150;
@@ -88,6 +113,9 @@ class FractalGeneratorBuilderTest {
         assertNotNull(generator);
     }
 
+    /**
+     * Test that the builder throws an exception if the required parameters are not set.
+     */
     @Test
     void testSuccessfulBuildWithColorStrategyFactory() {
         IFractalGenerator generator = this.builder
@@ -99,24 +127,36 @@ class FractalGeneratorBuilderTest {
         assertNotNull(generator);
     }
 
+    /**
+     * Test that the builder throws an exception if the dimensions are invalid.
+     */
     @Test
     void testInvalidDimensions() {
         assertThrows(IllegalArgumentException.class, () -> this.builder.withDimensions(0, 500));
         assertThrows(IllegalArgumentException.class, () -> this.builder.withDimensions(500, -10));
     }
 
+    /**
+     * Test that the builder throws an exception if the max iterations are invalid.
+     */
     @Test
     void testInvalidMaxIterations() {
         assertThrows(IllegalArgumentException.class, () -> this.builder.withMaxIterations(0));
         assertThrows(IllegalArgumentException.class, () -> this.builder.withMaxIterations(-5));
     }
 
+    /**
+     * Test that the builder throws an exception if the zoom is invalid.
+     */
     @Test
     void testInvalidZoom() {
         assertThrows(IllegalArgumentException.class, () -> this.builder.withZoom(0.0));
         assertThrows(IllegalArgumentException.class, () -> this.builder.withZoom(-0.001));
     }
 
+    /**
+     * Test that the builder throws an exception if the center is null.
+     */
     @Test
     void testNullParametersThrowException() {
         assertThrows(NullPointerException.class, () -> this.builder.withCenter(null));
@@ -129,11 +169,14 @@ class FractalGeneratorBuilderTest {
 
     // --- TESTS ROTATION ANIMATION ---
 
+    /**
+     * Test the build method with a Julia sequence and a rotation animation.
+     */
     @Test
     void testBuildJuliaRotationAnimationSuccess() {
         IComplex c0 = new Complex(0.7885, 0.0);
 
-        FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
+        FractalGeneratorBuilder rotationBuilder = new FractalGeneratorBuilder()
                 .withDimensions(40, 40)
                 .withCenter(new Complex(0.0, 0.0))
                 .withZoom(0.005)
@@ -141,7 +184,7 @@ class FractalGeneratorBuilderTest {
                 .withColorStrategy(ColorStrategyType.GRAYSCALE)
                 .withOutputFile(ROT_GIF);
 
-        IFractalGenerator generator = builder.buildJuliaRotationAnimation(6, c0, 60);
+        IFractalGenerator generator = rotationBuilder.buildJuliaRotationAnimation(6, c0, 60);
 
         assertNotNull(generator);
         AnimatedFractalGenerator animated = assertInstanceOf(AnimatedFractalGenerator.class, generator);
@@ -157,11 +200,11 @@ class FractalGeneratorBuilderTest {
     }
 
     /**
-     *
+     * Test the build method with invalid parameters.
      */
     @Test
     void testBuildJuliaRotationAnimationInvalidParameters() {
-        FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
+        FractalGeneratorBuilder rotationBuilder = new FractalGeneratorBuilder()
                 .withDimensions(40, 40)
                 .withCenter(new Complex(0.0, 0.0))
                 .withZoom(0.005)
@@ -170,15 +213,15 @@ class FractalGeneratorBuilderTest {
         IComplex c0 = new Complex(0.7885, 0.0);
 
         // Frame count <= 0
-        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(0, c0, 50));
-        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(-2, c0, 50));
+        assertThrows(IllegalArgumentException.class, () -> rotationBuilder.buildJuliaRotationAnimation(0, c0, 50));
+        assertThrows(IllegalArgumentException.class, () -> rotationBuilder.buildJuliaRotationAnimation(-2, c0, 50));
 
-        // Délai <= 0
-        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(6, c0, 0));
-        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(6, c0, -30));
+        // Delay <= 0
+        assertThrows(IllegalArgumentException.class, () -> rotationBuilder.buildJuliaRotationAnimation(6, c0, 0));
+        assertThrows(IllegalArgumentException.class, () -> rotationBuilder.buildJuliaRotationAnimation(6, c0, -30));
 
-        // Constante c nulle
-        assertThrows(NullPointerException.class, () -> builder.buildJuliaRotationAnimation(6, null, 50));
+        // Null constant c
+        assertThrows(NullPointerException.class, () -> rotationBuilder.buildJuliaRotationAnimation(6, null, 50));
     }
 
 }

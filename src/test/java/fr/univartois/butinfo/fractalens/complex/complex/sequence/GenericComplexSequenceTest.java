@@ -13,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GenericComplexSequenceTest {
 
+    /**
+     * The epsilon used for floating point comparisons.
+     */
     private static final double EPSILON = 1e-9;
 
     /**
@@ -31,8 +34,7 @@ class GenericComplexSequenceTest {
     void testAdditiveSequence() {
 
         IComplex z0 = new Complex(0.2, 0.0);
-        IComplexSequence sequence = new GenericComplexSequence(z0, 5, (prev, init) -> prev.add(init));
-
+        IComplexSequence sequence = new GenericComplexSequence(z0, 5, IComplex::add);
         Iterator<IComplex> it = sequence.iterator();
 
         assertTrue(it.hasNext());

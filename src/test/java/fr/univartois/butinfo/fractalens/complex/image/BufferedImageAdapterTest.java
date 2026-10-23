@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit tests for the {@link BufferedImageAdaptater} class.
  */
-public class BufferedImageAdapterTest {
+class BufferedImageAdapterTest {
 
     /**
      * The width used for test images.

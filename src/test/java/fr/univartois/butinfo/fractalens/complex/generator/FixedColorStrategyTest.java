@@ -1,14 +1,21 @@
-package fr.univartois.butinfo.fractalens.generator;
+package fr.univartois.butinfo.fractalens.complex.generator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import fr.univartois.butinfo.fractalens.generator.ColorPalette;
+import fr.univartois.butinfo.fractalens.generator.FixedColorStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
 
+/**
+ * Unit tests for {@link FixedColorStrategy}.
+ */
 class FixedColorStrategyTest {
 
+    /**
+     * Test method for {@link FixedColorStrategy#getColor(int)}.
+     */
     @Test
     void testGetColorMaxIterations() {
         FixedColorStrategy strategy = new FixedColorStrategy(100, ColorPalette.RAINBOW);
@@ -16,6 +23,9 @@ class FixedColorStrategyTest {
         assertEquals(Color.BLACK, strategy.getColor(150));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColorStartOfRainbow() {
         FixedColorStrategy strategy = new FixedColorStrategy(100, ColorPalette.RAINBOW);
@@ -23,6 +33,9 @@ class FixedColorStrategyTest {
         assertEquals(expected, strategy.getColor(0));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColorMiddleOfRainbow() {
         FixedColorStrategy strategy = new FixedColorStrategy(100, ColorPalette.RAINBOW);
@@ -30,6 +43,9 @@ class FixedColorStrategyTest {
         assertEquals(expected, strategy.getColor(50));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColorEndOfRainbow() {
         FixedColorStrategy strategy = new FixedColorStrategy(100, ColorPalette.RAINBOW);
@@ -37,6 +53,9 @@ class FixedColorStrategyTest {
         assertEquals(expected, strategy.getColor(90));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColorBoundaryValues() {
         FixedColorStrategy strategy = new FixedColorStrategy(10, ColorPalette.RAINBOW);

@@ -37,6 +37,9 @@ class GradientColorStrategyTest {
      */
     private static final Color END = new Color(110, 0, 250);
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_WhenZeroIterations_ReturnsStartColor() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, START, END);
@@ -44,6 +47,9 @@ class GradientColorStrategyTest {
         assertEquals(START, strategy.getColor(0));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_WhenIterationsEqualsMax_ReturnsEndColor() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, START, END);
@@ -51,6 +57,9 @@ class GradientColorStrategyTest {
         assertEquals(END, strategy.getColor(MAX_ITERATIONS));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_WhenHalfIterations_ReturnsMiddleColor() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, START, END);
@@ -62,6 +71,9 @@ class GradientColorStrategyTest {
         assertEquals(150, color.getBlue());
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_WhenQuarterIterations_AppliesGradientFormula() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, START, END);
@@ -74,6 +86,9 @@ class GradientColorStrategyTest {
         assertEquals(100, color.getBlue());
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_WhenComponentIsNotAnInteger_RoundsToNearest() {
         IColorStrategy strategy = new GradientColorStrategy(3, Color.BLACK, new Color(100, 100, 100));
@@ -83,6 +98,9 @@ class GradientColorStrategyTest {
         assertEquals(new Color(67, 67, 67), strategy.getColor(2));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_WithYellowToRedGradient() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, Color.YELLOW, Color.RED);
@@ -92,6 +110,9 @@ class GradientColorStrategyTest {
         assertEquals(Color.RED, strategy.getColor(MAX_ITERATIONS));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_WhenIterationsExceedsMax_ReturnsEndColor() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, START, END);
@@ -99,6 +120,9 @@ class GradientColorStrategyTest {
         assertEquals(END, strategy.getColor(MAX_ITERATIONS + 50));
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_WhenIterationsIsNegative_ReturnsStartColor() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, START, END);
@@ -106,6 +130,9 @@ class GradientColorStrategyTest {
         assertEquals(START, strategy.getColor(-10));
     }
 
+    /**
+     * Test method for {@link GradientColorStrategy#getColor(int)} with the same start and end color.
+     */
     @Test
     void testGetColor_WhenSameStartAndEnd_AlwaysReturnsThisColor() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, Color.CYAN, Color.CYAN);
@@ -115,6 +142,9 @@ class GradientColorStrategyTest {
         }
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_ComponentsEvolveMonotonicallyFromStartToEnd() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS, START, END);
@@ -131,6 +161,9 @@ class GradientColorStrategyTest {
         }
     }
 
+    /**
+     * test getColor
+     */
     @Test
     void testGetColor_ReturnsOpaqueColor() {
         IColorStrategy strategy = new GradientColorStrategy(MAX_ITERATIONS,
@@ -139,6 +172,10 @@ class GradientColorStrategyTest {
         assertEquals(255, strategy.getColor(40).getAlpha());
     }
 
+    /**
+     * test constructor
+     * @param maxIterations the maximum number of iterations
+     */
     @ParameterizedTest
     @ValueSource(ints = { 0, -1, -100 })
     void testConstructor_WhenMaxIterationsIsNotPositive_ThrowsException(int maxIterations) {
@@ -146,12 +183,18 @@ class GradientColorStrategyTest {
                 () -> new GradientColorStrategy(maxIterations, START, END));
     }
 
+    /**
+     * test constructor
+     */
     @Test
     void testConstructor_WhenStartColorIsNull_ThrowsException() {
         assertThrows(NullPointerException.class,
                 () -> new GradientColorStrategy(MAX_ITERATIONS, null, END));
     }
 
+    /**
+     * test constructor
+     */
     @Test
     void testConstructor_WhenEndColorIsNull_ThrowsException() {
         assertThrows(NullPointerException.class,
