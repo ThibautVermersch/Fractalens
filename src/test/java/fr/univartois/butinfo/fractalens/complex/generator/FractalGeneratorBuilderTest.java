@@ -176,7 +176,7 @@ class FractalGeneratorBuilderTest {
     void testBuildJuliaRotationAnimationSuccess() {
         IComplex c0 = new Complex(0.7885, 0.0);
 
-        FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
+        FractalGeneratorBuilder rotationBuilder = new FractalGeneratorBuilder()
                 .withDimensions(40, 40)
                 .withCenter(new Complex(0.0, 0.0))
                 .withZoom(0.005)
@@ -184,7 +184,7 @@ class FractalGeneratorBuilderTest {
                 .withColorStrategy(ColorStrategyType.GRAYSCALE)
                 .withOutputFile(ROT_GIF);
 
-        IFractalGenerator generator = builder.buildJuliaRotationAnimation(6, c0, 60);
+        IFractalGenerator generator = rotationBuilder.buildJuliaRotationAnimation(6, c0, 60);
 
         assertNotNull(generator);
         AnimatedFractalGenerator animated = assertInstanceOf(AnimatedFractalGenerator.class, generator);
@@ -204,7 +204,7 @@ class FractalGeneratorBuilderTest {
      */
     @Test
     void testBuildJuliaRotationAnimationInvalidParameters() {
-        FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
+        FractalGeneratorBuilder rotationBuilder = new FractalGeneratorBuilder()
                 .withDimensions(40, 40)
                 .withCenter(new Complex(0.0, 0.0))
                 .withZoom(0.005)
@@ -213,15 +213,15 @@ class FractalGeneratorBuilderTest {
         IComplex c0 = new Complex(0.7885, 0.0);
 
         // Frame count <= 0
-        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(0, c0, 50));
-        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(-2, c0, 50));
+        assertThrows(IllegalArgumentException.class, () -> rotationBuilder.buildJuliaRotationAnimation(0, c0, 50));
+        assertThrows(IllegalArgumentException.class, () -> rotationBuilder.buildJuliaRotationAnimation(-2, c0, 50));
 
         // Delay <= 0
-        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(6, c0, 0));
-        assertThrows(IllegalArgumentException.class, () -> builder.buildJuliaRotationAnimation(6, c0, -30));
+        assertThrows(IllegalArgumentException.class, () -> rotationBuilder.buildJuliaRotationAnimation(6, c0, 0));
+        assertThrows(IllegalArgumentException.class, () -> rotationBuilder.buildJuliaRotationAnimation(6, c0, -30));
 
-        // Constante c null
-        assertThrows(NullPointerException.class, () -> builder.buildJuliaRotationAnimation(6, null, 50));
+        // Null constant c
+        assertThrows(NullPointerException.class, () -> rotationBuilder.buildJuliaRotationAnimation(6, null, 50));
     }
 
 }

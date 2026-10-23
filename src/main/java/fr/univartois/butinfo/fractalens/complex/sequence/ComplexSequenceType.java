@@ -1,11 +1,9 @@
 package fr.univartois.butinfo.fractalens.complex.sequence;
-import java.util.Objects;
+
 import java.util.function.BiFunction;
 
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
-
-import java.util.Objects;
 
 public enum ComplexSequenceType {
     /**

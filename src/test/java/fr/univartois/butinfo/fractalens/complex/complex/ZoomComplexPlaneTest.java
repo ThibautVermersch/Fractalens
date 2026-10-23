@@ -8,7 +8,7 @@ import fr.univartois.butinfo.fractalens.complex.ZoomComplexPlane;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ZoomComplexPlaneTest {
+class ZoomComplexPlaneTest {
 
     /**
      * Margin of error for floating point comparisons.
