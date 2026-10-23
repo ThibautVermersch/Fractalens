@@ -20,13 +20,18 @@ import fr.univartois.butinfo.fractalens.complex.sequence.ComplexSequenceType;
 /**
  * Tests unitaires ciblant les animations construites par {@link FractalGeneratorBuilder}.
  *
- * @author Thibaut Vermersch
  * @version 0.1.0
  */
 class FractalGeneratorBuildTest {
 
+    /**
+     * The name of the test GIF file.
+     */
     private static final String TEST_GIF = "anim_test.gif";
 
+    /**
+     * Delete the test GIF file after each test.
+     */
     @AfterEach
     void tearDown() {
         File file = new File(TEST_GIF);
@@ -35,6 +40,9 @@ class FractalGeneratorBuildTest {
         }
     }
 
+    /**
+     * Test the build method with valid parameters.
+     */
     @Test
     void testBuildZoomAnimationSuccess() {
         FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
@@ -54,6 +62,9 @@ class FractalGeneratorBuildTest {
         assertEquals(5, animated.getGenerators().size());
     }
 
+    /**
+     * Test the build method with invalid parameters.
+     */
     @Test
     void testBuildZoomAnimationInvalidParameters() {
         FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
@@ -63,21 +74,24 @@ class FractalGeneratorBuildTest {
                 .withSequence(ComplexSequenceType.MANDELBROT)
                 .withColorStrategy(ColorStrategyType.GRAYSCALE);
 
-        // Nombre d'images <= 0
+        // Frame count <= 0
         assertThrows(IllegalArgumentException.class, () -> builder.buildZoomAnimation(0, 0.8, 100));
         assertThrows(IllegalArgumentException.class, () -> builder.buildZoomAnimation(-5, 0.8, 100));
 
-        // Facteur de zoom hors intervalle ]0, 1[
+        // Frame count <= 0
         assertThrows(IllegalArgumentException.class, () -> builder.buildZoomAnimation(10, 0.0, 100));
         assertThrows(IllegalArgumentException.class, () -> builder.buildZoomAnimation(10, 1.0, 100));
         assertThrows(IllegalArgumentException.class, () -> builder.buildZoomAnimation(10, 1.5, 100));
         assertThrows(IllegalArgumentException.class, () -> builder.buildZoomAnimation(10, -0.5, 100));
 
-        // Délai <= 0
+        // Delay <= 0
         assertThrows(IllegalArgumentException.class, () -> builder.buildZoomAnimation(10, 0.8, 0));
         assertThrows(IllegalArgumentException.class, () -> builder.buildZoomAnimation(10, 0.8, -50));
     }
 
+    /**
+     * Test the build method without center.
+     */
     @Test
     void testBuildZoomAnimationWithoutZoomThrowsException() {
         FractalGeneratorBuilder builder = new FractalGeneratorBuilder()
