@@ -226,7 +226,7 @@ class FractalGeneratorTest {
     }
 
     /**
-     * A fake image, which remembers the colors set and the path of the output file.
+     * A fake image, which remembers the color set and the path of the output file.
      */
     private static final class FakeImage implements IFractalImage {
 
@@ -272,22 +272,42 @@ class FractalGeneratorTest {
             this.colors = new Color[height][width];
         }
 
+        /**
+         * Returns the height of this image.
+         * @return The height of this image.
+         */
         @Override
         public int getHeight() {
             return height;
         }
 
+        /**
+         * Returns the width of this image.
+         * @return The width of this image.
+         */
         @Override
         public int getWidth() {
             return width;
         }
 
+        /**
+         * Sets the color of the pixel at (row, column) to the given color.
+         * @param row The row of the pixel to update.
+         * @param column The column of the pixel to update.
+         * @param color The new color for the pixel.
+         */
         @Override
         public void setColor(int row, int column, Color color) {
             colors[row][column] = color;
             nbSetColor++;
         }
 
+        /**
+         * Saves this image in a file
+         * @param path The path of the file in which to save this image.
+         *
+         * @throws IOException If an I/O error occurs when writing the file.
+         */
         @Override
         public void saveAs(String path) throws IOException {
             if (failure != null) {
@@ -317,11 +337,21 @@ class FractalGeneratorTest {
             this.nbTerms = nbTerms;
         }
 
+        /**
+         * Computes the next value in the sequence.
+         * @param previous The previous value in the sequence.
+         *
+         * @return The next value in the sequence.
+         */
         @Override
         public IComplex computeNext(IComplex previous) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Returns an iterator over the terms of this sequence.
+         * @return An iterator over the terms of this sequence.
+         */
         @Override
         public Iterator<IComplex> iterator() {
             List<IComplex> terms = new ArrayList<>();
@@ -341,61 +371,121 @@ class FractalGeneratorTest {
      */
     private record FakeComplex(double value) implements IComplex {
 
+        /**
+         * Returns the real part of this complex number.
+         * @return The real part of this complex number.
+         */
         @Override
         public double getRealPart() {
             return value;
         }
 
+        /**
+         * Returns the imaginary part of this complex number.
+         * @return The imaginary part of this complex number.
+         */
         @Override
         public double getImaginaryPart() {
             return 0;
         }
 
+        /**
+         * Returns the absolute value of this complex number.
+         * @return The absolute value of this complex number.
+         */
         @Override
         public double abs() {
             return Math.abs(value);
         }
 
+        /**
+         * Returns the complex number opposite to this one.
+         * @return The complex number opposite to this one.
+         */
         @Override
         public IComplex negate() {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Returns the complex number conjugate to this one.
+         * @return The complex number conjugate to this one.
+         */
         @Override
         public IComplex conjugate() {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Adds this complex number to another one.
+         * @param other The complex number to add to this one.
+         *
+         * @return The result of {@code this + other}.
+         */
         @Override
         public IComplex add(IComplex other) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Subtracts a complex number from this one.
+         * @param other The complex number to subtract from this one.
+         *
+         * @return The result of {@code this - other}.
+         */
         @Override
         public IComplex subtract(IComplex other) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Multiplies this complex number by a real value.
+         * @param factor The value by which to multiply this number.
+         *
+         * @return The result of {@code this * factor}.
+         */
         @Override
         public IComplex multiply(double factor) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Multiplies this complex number by another one.
+         * @param other The complex number to multiply this one with.
+         *
+         * @return The result of {@code this * other}.
+         */
         @Override
         public IComplex multiply(IComplex other) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Divides this complex number by another one.a
+         * @param other The complex number to divide this one by.
+         *
+         * @return The result of {@code this / other}.
+         */
         @Override
         public IComplex divide(IComplex other) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Raises this complex number to the power of a real number.
+         * @param exponent The (non-negative) power to which this number is raised.
+         *
+         * @return The result of {@code this ^ exponent}.
+         */
         @Override
         public IComplex pow(int exponent) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Raises this complex number to the power of 2.
+         * @return The result of {@code this ^ 2}.
+         */
         @Override
         public IComplex squared() {
             throw new UnsupportedOperationException();

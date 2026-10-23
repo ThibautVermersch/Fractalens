@@ -13,9 +13,9 @@ class TricornSequenceTest {
 
     /**
      * Creates a new complex number.
-     * @param realPart
-     * @param imaginaryPart
-     * @return
+     * @param realPart real part of the complex number
+     * @param imaginaryPart imaginary part of the complex number
+     * @return the created complex number
      */
     private static IComplex createComplex(double realPart, double imaginaryPart) {
         return new Complex(realPart, imaginaryPart);
@@ -23,10 +23,10 @@ class TricornSequenceTest {
 
     /**
      * Creates a new sequence implementing Tricorn's sequence
-     * @param first
-     * @param constant
-     * @param nbTerms
-     * @return
+     * @param first first term of the sequence
+     * @param constant constant number in the definition of the considered sequence
+     * @param nbTerms maximum number of terms to compute
+     * @return the created Tricorn's sequence
      */
     private static IComplexSequence createTricornSequence(
             IComplex first, IComplex constant, int nbTerms) {

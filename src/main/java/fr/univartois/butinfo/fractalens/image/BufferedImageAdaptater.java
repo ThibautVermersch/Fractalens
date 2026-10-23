@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The BufferedImageAdaptater class is an implementation of the IFractalImage interface
+ */
 public class BufferedImageAdaptater implements IFractalImage{
 
     /**
@@ -14,13 +17,18 @@ public class BufferedImageAdaptater implements IFractalImage{
     private final BufferedImage image;
 
     /**
-     * Constructor of the adaptater
+     * Constructor of the adapter
      * @param image The image to adapt
      */
     public BufferedImageAdaptater(BufferedImage image) {
         this.image = image;
     }
 
+    /**
+     * Constructor of the adapter
+     * @param width The width of the image
+     * @param height The height of the image
+     */
     public BufferedImageAdaptater(int width, int height) {
         this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
@@ -75,6 +83,10 @@ public class BufferedImageAdaptater implements IFractalImage{
         }
     }
 
+    /**
+     * Returns the adapted image as a BufferedImage
+     * @return The adapted image as a BufferedImage
+     */
     @Override
     public BufferedImage asBufferedImage() {
 

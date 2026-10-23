@@ -28,17 +28,7 @@ import java.util.NoSuchElementException;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
-/**
- * The ComplexIterator class makes it possible to iterate over the terms of any
- * {@link IComplexSequence}, starting from its first term.
- * <p>
- * It only relies on {@link IComplexSequence#computeNext(IComplex)}, so that it can be
- * reused for any kind of complex sequence.
- *
- * @author Yeleen Cividino
- *
- * @version 0.1.0
- */
+
 public class ComplexIterator implements Iterator<IComplex> {
 
     /**
@@ -81,20 +71,18 @@ public class ComplexIterator implements Iterator<IComplex> {
         this.nbIterations = 0;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.util.Iterator#hasNext()
+    /**
+     * Returns true if the sequence has not yet been exhausted and the current term is
+     * @return true if the sequence has not yet been exhausted and the current term is
      */
     @Override
     public boolean hasNext() {
         return (nbIterations < maxIterations) && (current.abs() <= DIVERGENCE_THRESHOLD);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.util.Iterator#next()
+    /**
+     * Returns the next term in the sequence.
+     * @return The next term in the sequence.
      */
     @Override
     public IComplex next() {

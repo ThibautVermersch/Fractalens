@@ -13,8 +13,8 @@ public class ComplexPlane implements IComplexPlane{
 
     /**
      * Constructor
-     * @param height
-     * @param width
+     * @param height The height of the image.
+     * @param width  The width of the image.
      */
     public ComplexPlane(int height, int width) {
         this.height = height;
@@ -26,7 +26,7 @@ public class ComplexPlane implements IComplexPlane{
      * @param row The row of the pixel in the image.
      * @param column The column of the pixel in the image.
      *
-     * @return
+     * @return The complex number at the given position.
      */
     public IComplex asComplex(int row, int column) {
         double a = column - (width/2.);
