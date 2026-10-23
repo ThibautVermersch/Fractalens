@@ -358,6 +358,7 @@ You can run FractaLens via its Command Line Interface (CLI). Below are the main 
 | `-w, --width=<width>`                | Image width in pixels.                                                                                                                                                                                                                                                          |
 | `-x, --focus-x=<focusX>`             | Real part of the central point.                                                                                                                                                                                                                                                 |
 | `-y, --focus-y=<focusY>`             | Imaginary part of the central point.                                                                                                                                                                                                                                            |
+
 when options are listed for the generator, the first one is default
 
 ### Examples
