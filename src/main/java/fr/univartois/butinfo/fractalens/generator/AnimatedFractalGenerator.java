@@ -10,7 +10,9 @@ import java.util.Objects;
 import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import fr.univartois.butinfo.fractalens.image.IFractalImage;
 
-
+/**
+ * AnimatedFractalGenerator class.
+ */
 public class AnimatedFractalGenerator implements IFractalGenerator {
 
     /**
@@ -50,6 +52,10 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
         this.frames = new ArrayList<>();
     }
 
+    /**
+     * Returns the list of fractal generators.
+     * @return The list of fractal generators.
+     */
     public List<IFractalGenerator> getGenerators() {
         return Collections.unmodifiableList(this.generators);
     }

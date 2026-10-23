@@ -5,6 +5,9 @@ import java.util.function.BiFunction;
 import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
+/**
+ * The enum representing the different types of complex sequences.
+ */
 public enum ComplexSequenceType {
     /**
      * The Mandelbrot sequence.
