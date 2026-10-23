@@ -36,11 +36,11 @@ public class MultibrotSequence extends AbstractComplexSequence {
      * @throws IllegalArgumentException If {@code power} is less than {@code 2}.
      */
     public MultibrotSequence(IComplex initial, int power, int maxIterations) {
+        super(initial, maxIterations);
         if (power < MIN_POWER) {
             throw new IllegalArgumentException(
                     "The power must be at least " + MIN_POWER + ": " + power);
         }
-        super(initial, maxIterations);
         this.power = power;
     }
 
