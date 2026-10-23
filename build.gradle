@@ -7,7 +7,7 @@ plugins {
     id 'application'
     id 'jacoco'
     id 'java'
-    id 'org.sonarqube' version '3.5.0.2730'
+    id 'org.sonarqube' version '7.5.0.8588'
 }
 
 // The version of Java used in the project.
@@ -51,6 +51,12 @@ jacoco {
 tasks.named('jacocoTestReport') {
     dependsOn tasks.named('test')
 
+    // The XML report is the one read by SonarQube to display the coverage.
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
     classDirectories.setFrom(
             files(classDirectories.files.collect {
                 fileTree(dir: it, exclude: [
@@ -59,10 +65,12 @@ tasks.named('jacocoTestReport') {
             })
     )
 }
+
 // The configuration of the SonarQube static analysis.
 sonar {
     properties {
-        property("sonar.host.url", "http://sonarqube.univ-artois.fr")
+        property("sonar.host.url", "https://sonarqube.univ-artois.fr")
         property("sonar.projectKey", "fractalens")
+        property("sonar.coverage.exclusions", "**/Fractalens.java")
     }
 }
