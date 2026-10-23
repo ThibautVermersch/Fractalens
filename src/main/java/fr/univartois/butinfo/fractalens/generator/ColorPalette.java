@@ -2,6 +2,9 @@ package fr.univartois.butinfo.fractalens.generator;
 
 import java.awt.Color;
 
+/**
+ * Enumeration encapsulating the different available color palettes.
+ */
 public enum ColorPalette {
     RAINBOW(new Color[]{
             new Color(200, 0, 0),
@@ -15,7 +18,6 @@ public enum ColorPalette {
             new Color(0, 80, 200),
             new Color(0, 0, 200)
     }),
-
 
     FIRE(new Color[]{
             new Color(177, 0, 0),
@@ -39,6 +41,7 @@ public enum ColorPalette {
             new Color(180, 235, 255),
             new Color(217, 217, 241)
     }),
+
     SUNSET(new Color[]{
             new Color(40, 0, 60),
             new Color(100, 0, 100),
@@ -77,12 +80,25 @@ public enum ColorPalette {
             new Color(0, 240, 255)
     });
 
+    /**
+     * The colors of the palette.
+     */
     private final Color[] colors;
 
+    /**
+     * Constructor.
+     * @param colors The colors of the palette.
+     */
     ColorPalette(Color[] colors) {
         this.colors = colors;
     }
 
+    /**
+     * Returns the color of the palette at the given iteration.
+     * @param iterations The number of iterations performed.
+     * @param maxIterations The maximum number of iterations.
+     * @return The color of the palette at the given iteration.
+     */
     public Color getColor(int iterations, int maxIterations) {
         if (iterations >= maxIterations) {
             return Color.BLACK;

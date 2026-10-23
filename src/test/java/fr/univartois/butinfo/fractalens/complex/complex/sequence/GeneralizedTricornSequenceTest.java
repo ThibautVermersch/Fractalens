@@ -13,9 +13,9 @@ class GeneralizedTricornSequenceTest {
 
     /**
      * Creates a new complex number.
-     * @param realPart
-     * @param imaginaryPart
-     * @return
+     * @param realPart real part of the complex number
+     * @param imaginaryPart imaginary part of the complex number
+     * @return the created complex number
      */
     private static IComplex createComplex(double realPart, double imaginaryPart) {
         return new Complex(realPart, imaginaryPart);
@@ -30,7 +30,7 @@ class GeneralizedTricornSequenceTest {
      * @param degree The degree of the considered sequence.
      * @param nbTerms The maximum number of terms to compute.
      *
-     * @return The created generalized Tricorn sequence.
+     * @return They created generalized Tricorn sequence.
      */
     private static IComplexSequence createGeneralizedTricornSequence(
             IComplex first, IComplex constant, int nbTerms,  int degree) {

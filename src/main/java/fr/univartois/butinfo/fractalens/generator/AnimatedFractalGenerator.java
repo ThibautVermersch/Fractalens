@@ -24,7 +24,7 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
     private final String outputPath;
 
     /**
-     * Images générées par les sous-générateurs.
+     * The list of generated frames.
      */
     private final List<IFractalImage> frames;
 
@@ -57,7 +57,7 @@ public class AnimatedFractalGenerator implements IFractalGenerator {
     /**
      * Generates all fractal images in the sequence.
      *
-     * @return The first generated fractal image of the sequence.
+     * @return The first generated a fractal image of the sequence.
      */
     @Override
     public IFractalImage generateImage() {

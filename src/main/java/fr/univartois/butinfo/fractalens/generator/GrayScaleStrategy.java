@@ -2,24 +2,29 @@ package fr.univartois.butinfo.fractalens.generator;
 
 import java.awt.Color;
 
+/**
+ *
+ */
 public class GrayScaleStrategy implements IColorStrategy {
+
+    /**
+     * The maximum number of iterations before the color is black.
+     */
     private int maxIterations;
 
+    /**
+     * Constructor.
+     * @param maxIterations The maximum number of iterations before the color is black.
+     */
     public GrayScaleStrategy(int maxIterations) {
         this.maxIterations = maxIterations;
     }
 
-
     /**
-     * Calculates the shade of gray based on the number of iterations,
-     * the brightness decreases as the number of iterations increases.
-     *
-     * @param iterations the current number of iterations completed
-     * @return a {@link Color} representing the grayscale value, or {@link Color#BLACK}
-     *         if {@code iterations >= maxIterations}
+     * Returns the color of the pixel at the given iteration
+     * @param iterations The number of iterations performed.
+     * @return The color of the pixel at the given iteration
      */
-
-
     @Override
     public Color getColor(int iterations) {
         if (iterations >= maxIterations) {

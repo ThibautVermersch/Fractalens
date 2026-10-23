@@ -30,6 +30,13 @@ import fr.univartois.butinfo.fractalens.image.IFractalImage;
  */
 class AnimatedFractalGeneratorTest {
 
+    /**
+     * create a dummy generator for tests
+     * @param width width of the image
+     * @param height height of the image
+     * @param maxIterations max iterations of the generator
+     * @return a dummy generator
+     */
     private IFractalGenerator createDummyGenerator(int width, int height, int maxIterations) {
         IComplexPlane plane = new ComplexPlane(height, width);
         BufferedImageAdaptater image = new BufferedImageAdaptater(width, height);
@@ -45,6 +52,9 @@ class AnimatedFractalGeneratorTest {
         );
     }
 
+    /**
+     * test the saveImage method
+     */
     @Test
     void testSaveImageCreatesGifFile() {
         List<IFractalGenerator> generators = new ArrayList<>();
@@ -71,6 +81,9 @@ class AnimatedFractalGeneratorTest {
         file.delete();
     }
 
+    /**
+     * test the generateImage method
+     */
     @Test
     void testGenerateImageReturnsFirstImage() {
         List<IFractalGenerator> generators = List.of(
@@ -86,6 +99,9 @@ class AnimatedFractalGeneratorTest {
         assertEquals(20, first.getHeight());
     }
 
+    /**
+     * test the computePixelColor method
+     */
     @Test
     void testComputePixelColorDelegation() {
         List<IFractalGenerator> generators = List.of(createDummyGenerator(30, 30, 15));
@@ -99,6 +115,9 @@ class AnimatedFractalGeneratorTest {
         assertEquals(Color.BLACK, emptyGenerator.computePixelColor(0, 0));
     }
 
+    /**
+     * test the getGenerators method
+     */
     @Test
     void testGetGenerators() {
         List<IFractalGenerator> generators = List.of(createDummyGenerator(10, 10, 5));
@@ -110,6 +129,9 @@ class AnimatedFractalGeneratorTest {
         assertThrows(UnsupportedOperationException.class, () -> unmodifiableGenerators.add(extraGenerator));
     }
 
+    /**
+     * test the constructor with invalid arguments
+     */
     @Test
     void testConstructorInvalidArguments() {
         List<IFractalGenerator> list = List.of(createDummyGenerator(10, 10, 5));
@@ -120,6 +142,9 @@ class AnimatedFractalGeneratorTest {
         assertThrows(IllegalArgumentException.class, () -> new AnimatedFractalGenerator(list, "out.gif", -10));
     }
 
+    /**
+     * test the saveImage method with an empty list of generators
+     */
     @Test
     void testSaveImageEmptyListThrowsException() {
         AnimatedFractalGenerator emptyGenerator = new AnimatedFractalGenerator(Collections.emptyList(), "empty.gif", 50);

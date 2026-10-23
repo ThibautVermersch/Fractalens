@@ -44,12 +44,12 @@ public class FractalGenerator implements IFractalGenerator{
 
     /**
      * Constructor
-     * @param sequenceFactory
-     * @param image
-     * @param plane
-     * @param maxIterations
-     * @param colorStrategy
-     * @param path
+     * @param sequenceFactory The sequence factory to use.
+     * @param image The image to generate.
+     * @param plane The plane on which the fractal is drawn.
+     * @param maxIterations The maximum number of iterations to compute.
+     * @param colorStrategy The color strategy to use.
+     * @param path The path of the output file.
      */
     public FractalGenerator(BiFunction<IComplex, Integer, IComplexSequence> sequenceFactory, IFractalImage image,
             IComplexPlane plane, int maxIterations, IColorStrategy colorStrategy,

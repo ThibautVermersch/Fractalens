@@ -7,8 +7,14 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
 
+/**
+ * Unit tests for {@link GrayScaleStrategy}.
+ */
 class GrayScaleStrategyTest {
 
+    /**
+     * Test method for {@link GrayScaleStrategy#getColor(int)}.
+     */
     @Test
     void testGetColor_WhenIterationsEqualsMax_ReturnsBlack() {
         int maxIterations = 100;
@@ -19,6 +25,9 @@ class GrayScaleStrategyTest {
         assertEquals(Color.BLACK, color);
     }
 
+    /**
+     * Test method for {@link GrayScaleStrategy#getColor(int)}.
+     */
     @Test
     void testGetColor_WhenIterationsExceedsMax_ReturnsBlack() {
         int maxIterations = 100;
@@ -29,6 +38,9 @@ class GrayScaleStrategyTest {
         assertEquals(Color.BLACK, color);
     }
 
+    /**
+     * Test method for {@link GrayScaleStrategy#getColor(int)}.
+     */
     @Test
     void testGetColor_WhenZeroIterations_ReturnsWhite() {
         int maxIterations = 100;
@@ -41,6 +53,9 @@ class GrayScaleStrategyTest {
         assertEquals(255, color.getBlue());
     }
 
+    /**
+     * Test method for {@link GrayScaleStrategy#getColor(int)}.
+     */
     @Test
     void testGetColor_IntermediateValue_ReturnsGrayShade() {
         int maxIterations = 100;

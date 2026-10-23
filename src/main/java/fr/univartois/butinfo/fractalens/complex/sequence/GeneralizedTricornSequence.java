@@ -14,13 +14,16 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
      */
     private static final int MIN_DEGREES = 2;
 
+    /**
+     * The degree of the sequence.
+     */
     private final int degree;
 
     /**
      * Constructor of the sequence
-     * @param initial
-     * @param c
-     * @param maxIterations
+     * @param initial The initial value of the sequence.
+     * @param c The constant c
+     * @param maxIterations The maximum number of iterations to compute.
      */
     public GeneralizedTricornSequence(IComplex initial, IComplex c, int maxIterations,
             int degree) {
@@ -37,7 +40,7 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
      * one raised to the degree * of the sequence, plus the constant
      * @param previous The previous value in the sequence.
      *
-     * @return
+     * @return The next value in the sequence.
      */
     public IComplex computeNext(IComplex previous) {
         IComplex conjugate = previous.conjugate();
@@ -50,7 +53,7 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
 
     /**
      * Getter of the constant c.
-     * @return
+     * @return The constant c.
      */
     public IComplex getC() {
         return c;
@@ -58,7 +61,7 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
 
     /**
      * Getter of the constant c.
-     * @return
+     * @return The degree of the sequence.
      */
     public int getDegree() {
         return degree;

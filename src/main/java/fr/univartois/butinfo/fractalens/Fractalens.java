@@ -33,7 +33,7 @@ public final class Fractalens {
         String fileZoomGif = (args.length > 6) ? args[6] : "mandelbrot-zoom.gif";
         String fileRotationGif = (args.length > 7) ? args[7] : "julia-rotation.gif";
 
-        // Figure 1 : Julia (-0.4 + 0.6i) avec dégradé chaud
+        // Figure 1: Julia (-0.4 + 0.6i) with a warm color gradient
         generate(new FractalGeneratorBuilder()
                 .withSequence(ComplexSequenceType.JULIA)
                 .withDimensions(800, 800)
@@ -44,7 +44,7 @@ public final class Fractalens {
                 .withOutputFile(fileFig1)
                 .build());
 
-        // Figure 2 : Julia spiral (0.285 + 0.01i) avec palette glacée
+        // Figure 2: Julia spiral (0.285 + 0.01i) with an icy color palette
         generate(new FractalGeneratorBuilder()
                 .withSequence(ComplexSequenceType.JULIA_SPIRAL)
                 .withDimensions(800, 800)
@@ -55,7 +55,7 @@ public final class Fractalens {
                 .withOutputFile(fileFig2)
                 .build());
 
-        // Figure 3 : Burning Ship avec palette feu
+        // Figure 3: Burning Ship with a fire color palette
         generate(new FractalGeneratorBuilder()
                 .withSequence(ComplexSequenceType.BURNING_SHIP)
                 .withDimensions(800, 800)
@@ -66,7 +66,7 @@ public final class Fractalens {
                 .withOutputFile(fileFig3)
                 .build());
 
-        // Figure 4 : Mandelbrot avec dégradé bleu/jaune
+        // Figure 4: Mandelbrot with a blue/yellow gradient
         generate(new FractalGeneratorBuilder()
                 .withSequence(ComplexSequenceType.MANDELBROT)
                 .withDimensions(800, 600)
@@ -77,7 +77,7 @@ public final class Fractalens {
                 .withOutputFile(fileFig4)
                 .build());
 
-        // Figure 5 : Tricorn avec palette cyber inversée
+        // Figure 5: Tricorn with inverted cyber-palette
         generate(new FractalGeneratorBuilder()
                 .withSequence(ComplexSequenceType.TRICORN)
                 .withDimensions(800, 800)
@@ -88,7 +88,7 @@ public final class Fractalens {
                 .withOutputFile(fileFig5)
                 .build());
 
-        // Figure 6 : Suite cubique lambda avec palette néon
+        // Figure 6: Cubic lambda sequence with neon palette
         generate(new FractalGeneratorBuilder()
                 .withSequence(ComplexSequenceType.CUBIC_LAMBDA)
                 .withDimensions(800, 800)
@@ -99,8 +99,8 @@ public final class Fractalens {
                 .withOutputFile(fileFigLambda)
                 .build());
 
-        // Animation 1 : zoom sur Mandelbrot au point -0.743643887037151 + 0.131825904205330i
-        // (60 images, zoom multiplié par 0.9 à chaque image, 80 ms entre deux images)
+        // Animation 1: zoom into the Mandelbrot set at the point -0.743643887037151 + 0.131825904205330i
+        // (60 frames, zoom factor multiplied by 0.9 per frame, 80 ms between frames)
         generate(new FractalGeneratorBuilder()
                 .withSequence(ComplexSequenceType.MANDELBROT)
                 .withDimensions(400, 400)
@@ -111,8 +111,8 @@ public final class Fractalens {
                 .withOutputFile(fileZoomGif)
                 .buildZoomAnimation(60, 0.9, 80));
 
-        // Animation 2 : Julia centrée en 0, rotation de la constante c = 0.7885 + 0i
-        // (60 images pour un tour complet, 80 ms entre deux images)
+        // Animation 2: Julia set centered at 0, with rotation of the constant c = 0.7885 + 0i
+        // (60 frames for a full rotation, 80 ms between frames)
         generate(new FractalGeneratorBuilder()
                 .withDimensions(400, 400)
                 .withCenter(new Complex(0.0, 0.0))

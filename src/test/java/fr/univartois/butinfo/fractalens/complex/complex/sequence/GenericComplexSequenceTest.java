@@ -13,6 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GenericComplexSequenceTest {
 
+    /**
+     * The epsilon used for floating point comparisons.
+     */
     private static final double EPSILON = 1e-9;
 
     /**
