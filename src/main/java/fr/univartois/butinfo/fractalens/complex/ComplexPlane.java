@@ -1,5 +1,8 @@
 package fr.univartois.butinfo.fractalens.complex;
 
+/**
+ * The complex plane.
+ */
 public class ComplexPlane implements IComplexPlane{
 
     /**

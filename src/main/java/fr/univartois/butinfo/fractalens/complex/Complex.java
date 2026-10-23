@@ -2,6 +2,9 @@ package fr.univartois.butinfo.fractalens.complex;
 
 import java.util.Objects;
 
+/**
+ * A complex number represented by its real and imaginary parts.
+ */
 public class Complex implements IComplex{
 
     /**
@@ -14,8 +17,11 @@ public class Complex implements IComplex{
      */
     private final double b;
 
-
-
+    /**
+     * Constructor of the complex number.
+     * @param a real part of the complex number
+     * @param b imaginary part of the complex number
+     */
     public Complex(double a, double b) {
         this.a = a;
         this.b = b;

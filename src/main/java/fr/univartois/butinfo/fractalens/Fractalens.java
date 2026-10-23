@@ -2,6 +2,9 @@ package fr.univartois.butinfo.fractalens;
 
 import picocli.CommandLine;
 
+/**
+ * Main class of the FractaLens application.
+ */
 public final class Fractalens {
 
     /**

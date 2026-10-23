@@ -2,6 +2,9 @@ package fr.univartois.butinfo.fractalens.generator;
 
 import java.awt.*;
 
+/**
+ * Color strategy that masks each channel of the base color strategy.
+ */
 public class ColorMaskStrategy implements IColorStrategy {
 
     /**

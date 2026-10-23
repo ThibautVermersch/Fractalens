@@ -2,6 +2,9 @@ package fr.univartois.butinfo.fractalens.generator;
 
 import java.awt.Color;
 
+/**
+ * Fixed color strategy.
+ */
 public class FixedColorStrategy implements IColorStrategy {
 
     /**
