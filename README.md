@@ -404,6 +404,7 @@ when options are listed for the generator, the first one is default
 | Configuration of the fractal generator      | Builder / Factory          | Vermersch Thibaut |
 | Command-line interface                      |                            | Vermersch Thibaut |
 
+
 ## Team
 
 This project has been developed by:
