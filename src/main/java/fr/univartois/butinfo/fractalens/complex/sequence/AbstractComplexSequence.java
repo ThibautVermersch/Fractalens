@@ -4,10 +4,13 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 import java.util.Iterator;
 
+/**
+ * Abstract class for complex sequences.
+ */
 public abstract class AbstractComplexSequence implements IComplexSequence {
 
     /**
-     * The initial complex number of the sequence.
+     * The initial complex amount of the sequence.
      */
     protected final IComplex initial;
 

@@ -6,6 +6,9 @@ import java.awt.Color;
  * Enumeration encapsulating the different available color palettes.
  */
 public enum ColorPalette {
+    /**
+     * The rainbow palette.
+     */
     RAINBOW(new Color[]{
             new Color(200, 0, 0),
             new Color(200, 100, 0),
@@ -19,6 +22,9 @@ public enum ColorPalette {
             new Color(0, 0, 200)
     }),
 
+    /**
+     * The fire palette.
+     */
     FIRE(new Color[]{
             new Color(177, 0, 0),
             new Color(202, 3, 3),
@@ -31,6 +37,9 @@ public enum ColorPalette {
             new Color(255, 245, 162)
     }),
 
+    /**
+     * The ice palette.
+     */
     ICE(new Color[]{
             new Color(0, 16, 48),
             new Color(0, 30, 80),
@@ -42,6 +51,9 @@ public enum ColorPalette {
             new Color(217, 217, 241)
     }),
 
+    /**
+     * The sunset palette.
+     */
     SUNSET(new Color[]{
             new Color(40, 0, 60),
             new Color(100, 0, 100),
@@ -51,6 +63,9 @@ public enum ColorPalette {
             new Color(255, 240, 150)
     }),
 
+    /**
+     * The forest palette.
+     */
     FOREST(new Color[]{
             new Color(10, 30, 10),
             new Color(30, 70, 20),
@@ -60,6 +75,9 @@ public enum ColorPalette {
             new Color(220, 245, 160)
     }),
 
+    /**
+     * The neon palette.
+     */
     NEON(new Color[]{
             new Color(255, 0, 128),
             new Color(255, 0, 255),
@@ -69,6 +87,9 @@ public enum ColorPalette {
             new Color(0, 255, 128)
     }),
 
+    /**
+     * The cyber palette.
+     */
     CYBER(new Color[]{
             new Color(10, 0, 20),
             new Color(30, 0, 50),

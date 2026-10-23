@@ -8,24 +8,70 @@ import java.util.function.Function;
  */
 public enum ColorStrategyType {
 
+    /**
+     * The available color palettes.
+     */
     CYBER(maxIterations -> new FixedColorStrategy(maxIterations, ColorPalette.CYBER)),
+    /**
+     * The available color palettes.
+     */
     FIRE(maxIterations -> new FixedColorStrategy(maxIterations, ColorPalette.FIRE)),
+    /**
+     * The available color palettes.
+     */
     ICE(maxIterations -> new FixedColorStrategy(maxIterations, ColorPalette.ICE)),
+    /**
+     * The available color palettes.
+     */
     RAINBOW(maxIterations -> new FixedColorStrategy(maxIterations, ColorPalette.RAINBOW)),
+    /**
+     * The available color palettes.
+     */
     SUNSET(maxIterations -> new FixedColorStrategy(maxIterations, ColorPalette.SUNSET)),
+    /**
+     * The available color palettes.
+     */
     FOREST(maxIterations -> new FixedColorStrategy(maxIterations, ColorPalette.FOREST)),
+    /**
+     * The available color palettes.
+     */
     NEON(maxIterations -> new FixedColorStrategy(maxIterations, ColorPalette.NEON)),
 
+    /**
+     * The grayscale strategy.
+     */
     GRAYSCALE(GrayScaleStrategy::new),
-
+    /**
+     * The gradient color strategy.
+     */
     GRADIENT_BLUE_YELLOW(maxIterations -> new GradientColorStrategy(maxIterations, Color.BLUE, Color.YELLOW)),
+    /**
+     * The gradient color strategy.
+     */
     GRADIENT_RED_CYAN(maxIterations -> new GradientColorStrategy(maxIterations, Color.RED, Color.CYAN)),
+    /**
+     * The gradient color strategy.
+     */
     GRADIENT_PURPLE_GREEN(maxIterations -> new GradientColorStrategy(maxIterations, new Color(75, 0, 130), Color.GREEN)),
+    /**
+     * The gradient color strategy.
+     */
     GRADIENT_ORANGE_PURPLE(maxIterations -> new GradientColorStrategy(maxIterations, Color.ORANGE, new Color(128, 0, 128))),
+    /**
+     * The gradient color strategy.
+     */
     GRADIENT_MAGENTA_LIME(maxIterations -> new GradientColorStrategy(maxIterations, Color.MAGENTA, new Color(0, 255, 0))),
+    /**
+     * The gradient color strategy.
+     */
     GRADIENT_FIRE_ICE(maxIterations -> new GradientColorStrategy(maxIterations, new Color(255, 69, 0), new Color(0, 255, 255))),
-
+    /**
+     * The gradient color strategy.
+     */
     INVERTED_CYBER(max -> new InvertedColorStrategy(new FixedColorStrategy(max, ColorPalette.CYBER))),
+    /**
+     * The gradient color strategy.
+     */
     MASK_RED_ONLY(max -> new ColorMaskStrategy(new FixedColorStrategy(max, ColorPalette.RAINBOW), true, false, false));
 
     /**

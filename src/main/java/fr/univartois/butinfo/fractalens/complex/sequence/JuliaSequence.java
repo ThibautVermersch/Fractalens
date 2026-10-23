@@ -2,6 +2,9 @@ package fr.univartois.butinfo.fractalens.complex.sequence;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
+/**
+ * The Julia sequence.
+ */
 public class JuliaSequence extends AbstractComplexSequence{
 
     /**

@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.Objects;
 
 /**
-
+ * Gradient color strategy.
  * @author Yeleen Cividino
  *
  * @version 0.1.0

@@ -5,9 +5,6 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 /**
  * The MultibrotSequence class represents the generalization of the Mandelbrot sequence
  * to a power {@code p} greater than or equal to {@code 2}:
- * <pre>
- *     z(n+1) = z(n)<sup>p</sup> + z0
- * </pre>
  * The fractal obtained from this sequence has {@code p - 1} "lobes" (with
  * {@code p = 2}, this is exactly the Mandelbrot set).
  *

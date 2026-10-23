@@ -3,7 +3,7 @@ package fr.univartois.butinfo.fractalens.generator;
 import java.awt.Color;
 
 /**
- *
+ * Gray scale color strategy.
  */
 public class GrayScaleStrategy implements IColorStrategy {
 
