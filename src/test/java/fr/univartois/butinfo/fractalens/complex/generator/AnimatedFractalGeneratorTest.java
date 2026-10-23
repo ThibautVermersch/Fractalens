@@ -124,7 +124,9 @@ class AnimatedFractalGeneratorTest {
         AnimatedFractalGenerator animatedGenerator = new AnimatedFractalGenerator(generators, "dummy.gif", 50);
 
         assertEquals(1, animatedGenerator.getGenerators().size());
-        assertThrows(UnsupportedOperationException.class, () -> animatedGenerator.getGenerators().add(generators.get(0)));
+        List<IFractalGenerator> unmodifiableGenerators = animatedGenerator.getGenerators();
+        IFractalGenerator extraGenerator = generators.get(0);
+        assertThrows(UnsupportedOperationException.class, () -> unmodifiableGenerators.add(extraGenerator));
     }
 
     /**
