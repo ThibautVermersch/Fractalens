@@ -46,6 +46,13 @@ public class FractalensCommandCli implements Callable<Integer> {
     }
 
     /**
+     * Flag to display the help and usage message.
+     */
+    @Option(names = {"--help"}, usageHelp = true,
+            description = "Display this help message and exit.")
+    private boolean helpRequested;
+
+    /**
      * The type of fractal sequence to compute.
      */
     @Option(names = {"-f", "--fractal-name"}, defaultValue = "MANDELBROT",
@@ -77,7 +84,7 @@ public class FractalensCommandCli implements Callable<Integer> {
      * The scaling factor representing the zoom level.
      */
     @Option(names = {"-s", "--scale"}, defaultValue = "0.005",
-            description = "Scale / zoom to apply.")
+            description = "Scale / zoom to apply.(Between 0 and 1)")
     private double scale;
 
     /**
