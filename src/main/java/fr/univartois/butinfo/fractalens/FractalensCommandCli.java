@@ -46,7 +46,7 @@ public class FractalensCommandCli implements Callable<Integer> {
     }
 
     /**
-     * Flag to display the help and usage message.
+     * Flag to display the help and usage messages.
      */
     @Option(names = {"--help"}, usageHelp = true,
             description = "Display this help message and exit.")
