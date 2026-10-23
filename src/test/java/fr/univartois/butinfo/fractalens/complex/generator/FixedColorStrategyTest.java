@@ -2,7 +2,6 @@ package fr.univartois.butinfo.fractalens.complex.generator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 import fr.univartois.butinfo.fractalens.generator.ColorPalette;
 import fr.univartois.butinfo.fractalens.generator.FixedColorStrategy;
 import org.junit.jupiter.api.Test;

@@ -48,7 +48,6 @@ class ComplexTest {
      * @return The created complex number.
      */
     private static IComplex createComplex(double realPart, double imaginaryPart) {
-        // TODO Create here an instance of your class implementing IComplex.
         return new Complex(realPart, imaginaryPart);
     }
 

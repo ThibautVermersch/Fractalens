@@ -93,8 +93,8 @@ public class FractalGenerator implements IFractalGenerator{
 
         IComplexSequence sequence = sequenceFactory.apply(z0, maxIterations);
         int iterations = 0;
-        for (IComplex term : sequence) {
-            iterations ++;
+        for (var _ : sequence) {
+            iterations++;
         }
 
         return colorStrategy.getColor(iterations);
