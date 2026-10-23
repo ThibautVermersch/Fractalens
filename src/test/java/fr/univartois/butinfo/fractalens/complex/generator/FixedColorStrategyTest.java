@@ -1,11 +1,13 @@
-package fr.univartois.butinfo.fractalens.generator;
+package fr.univartois.butinfo.fractalens.complex.generator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
+
+import fr.univartois.butinfo.fractalens.generator.ColorPalette;
+import fr.univartois.butinfo.fractalens.generator.FixedColorStrategy;
 
 class FixedColorStrategyTest {
 

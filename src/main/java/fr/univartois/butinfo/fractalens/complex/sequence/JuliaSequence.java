@@ -2,7 +2,6 @@ package fr.univartois.butinfo.fractalens.complex.sequence;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
-import java.util.Iterator;
 
 public class JuliaSequence extends AbstractComplexSequence{
 

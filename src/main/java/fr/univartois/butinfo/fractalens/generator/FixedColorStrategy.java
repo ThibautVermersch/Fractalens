@@ -35,7 +35,7 @@ public class FixedColorStrategy implements IColorStrategy {
         }
 
         if (customColors != null && customColors.length > 0) {
-            int index = (int) Math.min(customColors.length - 1, (double) iterations / maxIterations * customColors.length);
+            int index = Math.min(customColors.length - 1, (int) ((double) iterations / maxIterations * customColors.length));
             return customColors[index];
         }
 
