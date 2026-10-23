@@ -71,8 +71,14 @@ tasks.named('jacocoTestReport') {
 // The configuration of the SonarQube static analysis.
 sonar {
     properties {
-        property("sonar.host.url", "https://sonarqube.univ-artois.fr")
-        property("sonar.projectKey", "fractalens")
-        property("sonar.coverage.exclusions", "**/Fractalens.java")
+        // 2. Clé unique de votre projet avec vos initiales (ex: Thibaut, Mathéo, Lucas, Yeleen)
+        property "sonar.projectKey", "fractalens-tmly"
+        property "sonar.projectName", "FractaLens"
+
+        // 3. URL sécurisée HTTPS du serveur SonarQube de l'université
+        property "sonar.host.url", "https://sonarqube.univ-artois.fr"
+
+        // 4. Lien vers le rapport JaCoCo pour remonter la couverture de tests
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
