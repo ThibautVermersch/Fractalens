@@ -11,9 +11,9 @@ public class TricornSequence extends AbstractComplexSequence{
 
     /**
      * Constructor of the sequence
-     * @param initial
-     * @param c
-     * @param maxIterations
+     * @param initial The initial value of the sequence.
+     * @param c The constant c
+     * @param maxIterations The maximum number of iterations to compute.
      */
     public TricornSequence(IComplex initial, IComplex c, int maxIterations) {
         super(initial, maxIterations);
@@ -24,7 +24,7 @@ public class TricornSequence extends AbstractComplexSequence{
      * Computes the next term: the square of the conjugate of the previous one, plus the constant.
      * @param previous The previous value in the sequence.
      *
-     * @return
+     * @return The next value in the sequence.
      */
     @Override
     public IComplex computeNext(IComplex previous) {
@@ -34,7 +34,7 @@ public class TricornSequence extends AbstractComplexSequence{
 
     /**
      * Getter of the constant c.
-     * @return
+     * @return The constant c.
      */
     public IComplex getC() {
         return c;
