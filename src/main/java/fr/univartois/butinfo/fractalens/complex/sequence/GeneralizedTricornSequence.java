@@ -2,6 +2,9 @@ package fr.univartois.butinfo.fractalens.complex.sequence;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
+/**
+ * The generalized tricorn sequence.
+ */
 public class GeneralizedTricornSequence extends AbstractComplexSequence {
 
     /**
@@ -24,6 +27,7 @@ public class GeneralizedTricornSequence extends AbstractComplexSequence {
      * @param initial The initial value of the sequence.
      * @param c The constant c
      * @param maxIterations The maximum number of iterations to compute.
+     * @param degree The degree of the sequence.
      */
     public GeneralizedTricornSequence(IComplex initial, IComplex c, int maxIterations,
             int degree) {

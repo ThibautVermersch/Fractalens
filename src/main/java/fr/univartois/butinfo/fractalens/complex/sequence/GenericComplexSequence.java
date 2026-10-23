@@ -4,6 +4,9 @@ import fr.univartois.butinfo.fractalens.complex.IComplex;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 
+/**
+ * The class representing a generic complex sequence.
+ */
 public class GenericComplexSequence extends AbstractComplexSequence{
 
     /**

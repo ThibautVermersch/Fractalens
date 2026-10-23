@@ -28,7 +28,9 @@ import java.util.NoSuchElementException;
 
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
-
+/**
+ * An iterator over a complex sequence.
+ */
 public class ComplexIterator implements Iterator<IComplex> {
 
     /**

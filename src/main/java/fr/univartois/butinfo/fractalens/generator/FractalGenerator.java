@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.function.BiFunction;
 
+/**
+ * The FractalGenerator class is responsible for generating fractals.
+ */
 public class FractalGenerator implements IFractalGenerator{
 
     /**
