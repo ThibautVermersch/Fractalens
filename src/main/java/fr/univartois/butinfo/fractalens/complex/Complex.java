@@ -4,9 +4,15 @@ import java.util.Objects;
 
 public class Complex implements IComplex{
 
+    /**
+     * The real part of this complex number.
+     */
+    private final double a;
 
-    private double a;
-    private double b;
+    /**
+     * The imaginary part of this complex number.
+     */
+    private final double b;
 
 
 

@@ -2,6 +2,9 @@ package fr.univartois.butinfo.fractalens.generator;
 
 import java.awt.*;
 
+/**
+ * Inverts the color of the pixel at each iteration
+ */
 public class InvertedColorStrategy implements IColorStrategy{
 
     /**
@@ -16,7 +19,7 @@ public class InvertedColorStrategy implements IColorStrategy{
 
     /**
      * Constructor of the inverted color strategy
-     * @param decorated
+     * @param decorated The color strategy to decorate
      */
     public InvertedColorStrategy(IColorStrategy decorated) {
         this.decorated = decorated;
@@ -24,8 +27,8 @@ public class InvertedColorStrategy implements IColorStrategy{
 
     /**
      * Returns the color of the pixel at the given iteration
-     * @param iterations
-     * @return
+     * @param iterations The number of iterations performed.
+     * @return The color of the pixel at the given iteration
      */
     @Override
     public Color getColor(int iterations) {

@@ -15,31 +15,37 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 class ColorStrategyTypeTest {
 
+    /**
+     * test all strategies creation not null
+     * @param strategyType  the strategy type
+     */
     @ParameterizedTest
     @EnumSource(ColorStrategyType.class)
     void testAllStrategiesCreationNotNull(ColorStrategyType strategyType) {
-        // Vérifie que chaque constante de l'énumération crée bien une stratégie non nulle
         IColorStrategy strategy = strategyType.createStrategy(100);
-        assertNotNull(strategy, "La stratégie créée ne doit pas être nulle pour " + strategyType);
-
-        // Vérifie que la stratégie retourne bien une couleur valide au milieu
-        assertNotNull(strategy.getColor(50), "La couleur renvoyée ne doit pas être nulle");
+        assertNotNull(strategy, "The created strategy must not be null for" + strategyType);
+        assertNotNull(strategy.getColor(50), "The returned color must not be null");
     }
 
+    /**
+     * test getFactory
+     */
     @Test
     void testGetFactory() {
         // Teste la méthode getFactory()
         Function<Integer, IColorStrategy> factory = ColorStrategyType.RAINBOW.getFactory();
-        assertNotNull(factory, "La fabrique ne doit pas être nulle");
+        assertNotNull(factory, "The manufacturing process must not be null.");
 
         IColorStrategy strategy = factory.apply(100);
-        assertNotNull(strategy, "La stratégie produite par apply() ne doit pas être nulle");
+        assertNotNull(strategy, "The strategy produced by apply() must not be null");
         assertEquals(new Color(200, 0, 0), strategy.getColor(0));
     }
 
+    /**
+     * test createInverted
+     */
     @Test
     void testCreateInvertedWithPalette() {
-        // Teste la méthode statique createInverted(maxIterations, palette)
         IColorStrategy invertedStrategy = ColorStrategyType.createInverted(100, ColorPalette.RAINBOW);
         assertNotNull(invertedStrategy);
 
@@ -47,17 +53,21 @@ class ColorStrategyTypeTest {
         assertEquals(expectedInverted, invertedStrategy.getColor(0));
     }
 
+    /**
+     * test createInverted
+     */
     @Test
     void testCreateInvertedWithStrategy() {
-        // Teste la méthode statique createInverted(strategy)
         IColorStrategy baseStrategy = ColorStrategyType.CYBER.createStrategy(100);
         IColorStrategy invertedStrategy = ColorStrategyType.createInverted(baseStrategy);
         assertNotNull(invertedStrategy);
     }
 
+    /**
+     * test createMasked
+     */
     @Test
     void testCreateMasked() {
-        // Teste la méthode statique createMasked()
         IColorStrategy maskedStrategy = ColorStrategyType.createMasked(100, ColorPalette.RAINBOW, 1.0, 0.0, 0.0);
         assertNotNull(maskedStrategy);
     }

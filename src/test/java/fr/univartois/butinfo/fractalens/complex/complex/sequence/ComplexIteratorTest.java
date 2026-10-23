@@ -154,36 +154,76 @@ class ComplexIteratorTest {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Adds this complex number to another one.
+         * @param other The complex number to add to this one.
+         *
+         * @return The result of {@code this + other}.
+         */
         @Override
         public IComplex add(IComplex other) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Subtracts a complex number from this one.
+         * @param other The complex number to subtract from this one.
+         *
+         * @return The result of {@code this - other}.
+         */
         @Override
         public IComplex subtract(IComplex other) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Multiplies this complex number by a real value.
+         * @param factor The value by which to multiply this number.
+         *
+         * @return The result of {@code this * factor}.
+         */
         @Override
         public IComplex multiply(double factor) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Multiplies this complex number by another one.
+         * @param other The complex number to multiply this one with.
+         *
+         * @return The result of {@code this * other}.
+         */
         @Override
         public IComplex multiply(IComplex other) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Divides this complex number by another one.
+         * @param other The complex number to divide this one by.
+         *
+         * @return The result of {@code this / other}.
+         */
         @Override
         public IComplex divide(IComplex other) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Raises this complex number to a power.
+         * @param exponent The (non-negative) power to which this number is raised.
+         *
+         * @return The result of {@code this ^ exponent}.
+         */
         @Override
         public IComplex pow(int exponent) {
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * Raises this complex number to the power of 2.
+         * @return The result of {@code this ^ 2}.
+         */
         @Override
         public IComplex squared() {throw new UnsupportedOperationException();}
 
@@ -197,11 +237,21 @@ class ComplexIteratorTest {
     private record FakeSequence(UnaryOperator<IComplex> function)
             implements IComplexSequence {
 
+        /**
+         * Computes the next term of the sequence.
+         * @param previous The previous value in the sequence.
+         *
+         * @return The next value in the sequence.
+         */
         @Override
         public IComplex computeNext(IComplex previous) {
             return function.apply(previous);
         }
 
+        /**
+         * This sequence does not support iteration.
+         * @return An empty iterator.
+         */
         @Override
         public Iterator<IComplex> iterator() {
             throw new UnsupportedOperationException();

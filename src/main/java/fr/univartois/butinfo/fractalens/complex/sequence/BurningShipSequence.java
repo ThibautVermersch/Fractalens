@@ -4,14 +4,29 @@ import fr.univartois.butinfo.fractalens.complex.Complex;
 import fr.univartois.butinfo.fractalens.complex.IComplex;
 
 public class BurningShipSequence extends AbstractComplexSequence {
+
+    /**
+     * The initial value of the sequence.
+     */
     private final IComplex z0;
 
+    /**
+     * Constructor of the sequence
+     * @param z0 The initial value of the sequence.
+     * @param maxIterations The maximum number of iterations to compute.
+     */
     public BurningShipSequence(IComplex z0, int maxIterations) {
 
         super(z0, maxIterations);
         this.z0 = z0;
     }
 
+    /**
+     * Computes the next term: the square of the absolute value of the previous one, plus the constant.
+     * @param previous The previous value in the sequence.
+     *
+     * @return The next value in the sequence.
+     */
     @Override
     public IComplex computeNext(IComplex previous) {
 
